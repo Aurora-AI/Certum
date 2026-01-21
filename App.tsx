@@ -1,12 +1,14 @@
-import React, { useEffect } from 'react';
-import Header from './components/Header';
-import Hero from './components/Hero';
-import GridBackground from './components/GridBackground';
-import Statement from './components/Statement';
-import CTA from './components/CTA';
-import Footer from './components/Footer';
-import { Concierge } from './components/Concierge';
-import DarkGallery from './components/DarkGallery';
+import React, { useEffect } from "react";
+import { Concierge } from "./components/Concierge";
+import CTA from "./components/CTA";
+import Footer from "./components/Footer";
+import GridBackground from "./components/GridBackground";
+import Header from "./components/Header";
+import Hero from "./components/Hero";
+import Statement from "./components/Statement";
+
+import CoreArchitecture from "./components/sections/CoreArchitecture";
+import GravityGallery from "./components/sections/GravityGallery";
 
 const App: React.FC = () => {
   // Ensure GSAP ScrollTrigger is registered if available
@@ -22,18 +24,20 @@ const App: React.FC = () => {
     <div className="font-sans antialiased text-ink bg-white min-h-screen selection:bg-ink selection:text-white">
       <GridBackground />
       <Header />
-      
+
       <main className="relative z-10">
         <Hero />
-        
+
         <div id="thesis" className="mt-20 md:mt-0">
-          <DarkGallery />
+          <GravityGallery />
         </div>
-        
+
+        <CoreArchitecture />
+
         <Statement />
         <CTA />
       </main>
-      
+
       <Concierge />
       <Footer />
     </div>

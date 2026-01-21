@@ -40,7 +40,7 @@ const products: Product[] = [
   },
 ];
 
-function SovereignCard({ data }: { data: Product }) {
+const SovereignCard: React.FC<{ data: Product }> = ({ data }) => {
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
 
@@ -116,7 +116,7 @@ function SovereignCard({ data }: { data: Product }) {
       </div>
     </div>
   );
-}
+};
 
 export default function DarkGallery() {
   return (

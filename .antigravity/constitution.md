@@ -1,5 +1,9 @@
 # CONSTITUIÇÃO MAD LAB AURORA: PROJETO CERTUM
 
+## 0. STATUS E AMBIENTE
+- **Live URL (SSoT Visual):** https://certum.vercel.app/
+- **Conceito Central:** "Wealth OS" (Sistema Operacional de Riqueza). Não é um site, é um console.
+
 ## 1. IDENTIDADE E ESTÉTICA
 - **Filosofia:** "Brutalismo de Luxo". A interface deve ser pesada, sólida, escura e intimidadora, mas refinada como uma joia.
 - **Visual:** Fundo Preto Absoluto (`#000000` ou `#050505`). Tipografia serifada para títulos (Vogue/Editorial) e monoespaçada para dados técnicos (Militar/HUD).
@@ -15,11 +19,10 @@
 - **Componentes:** Radix UI (Headless) + Shadcn/UI (Base customizada).
 
 ## 3. REGRAS DE OURO (ENGINEERING STANDARDS)
-1.  **Componentes Híbridos:** Mantenha Server Components como padrão. Use `'use client'` apenas nas folhas (botões, interações, animações).
-2.  **Fetch de Dados:** É PROIBIDO usar `fetch` nativo diretamente nos componentes. Todo acesso a dados deve passar pelo **Elysian SDK** ou Camada de Serviço tipada.
-3.  **Performance de Render:** O site deve rodar a 60 FPS. Evite *Layout Thrashing*. Use `will-change` com sabedoria.
-4.  **Limpeza:** Todo listener, timeline do GSAP ou intervalo deve ser limpo no `return` do hook.
-5.  **Mobile First? Não.** "Experience First". O desktop é a vitrine de cinema, o mobile é o controle remoto. Ambos devem ser perfeitos, mas não idênticos.
+1.  **Componentes Híbridos:** Mantenha Server Components como padrão. Use `'use client'` apenas nas folhas.
+2.  **Fetch de Dados:** É PROIBIDO usar `fetch` nativo diretamente. Todo acesso passa pelo **Elysian SDK**.
+3.  **Performance de Render:** O site deve rodar a 60 FPS. Evite *Layout Thrashing*.
+4.  **Limpeza:** Todo listener ou timeline GSAP deve ter `revert()` no cleanup.
 
 ## 4. INTEGRAÇÃO COM IA
-- O código deve ser preparado para **Generative UI** (Vercel AI SDK). Componentes devem aceitar props que possam ser streamadas por um LLM.
+- O código deve ser preparado para **Generative UI** (Vercel AI SDK).

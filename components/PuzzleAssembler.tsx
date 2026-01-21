@@ -148,7 +148,7 @@ const PuzzleAssembler: React.FC<PuzzleAssemblerProps> = ({ imageSrc, className }
       for (let y = 0; y < rows; y++) {
         for (let x = 0; x < cols; x++) {
           const u = cols === 1 ? 0.5 : x / (cols - 1);
-          const v = rows === 1 ? 0.5 : y / (rows - 1);
+          const v = y / (rows - 1);
 
           const px = (u - 0.5);
           const py = (v - 0.5);
@@ -245,4 +245,3 @@ const PuzzleAssembler: React.FC<PuzzleAssemblerProps> = ({ imageSrc, className }
 };
 
 export default PuzzleAssembler;
-
