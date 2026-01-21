@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1000" viewBox="0 0 1600 1000">
+  <defs>
+    <radialGradient id="r" cx="50%" cy="40%" r="70%">
+      <stop offset="0" stop-color="#1a1a1a"/>
+      <stop offset="1" stop-color="#000000"/>
+    </radialGradient>
+    <filter id="grain">
+      <feTurbulence type="fractalNoise" baseFrequency="0.7" numOctaves="3" stitchTiles="stitch" />
+      <feColorMatrix type="matrix" values="
+        1 0 0 0 0
+        0 1 0 0 0
+        0 0 1 0 0
+        0 0 0 0.16 0" />
+    </filter>
+  </defs>
+  <rect width="1600" height="1000" fill="url(#r)"/>
+  <g fill="none" stroke="#1f1f1f" stroke-width="18">
+    <circle cx="800" cy="520" r="280"/>
+    <circle cx="800" cy="520" r="160"/>
+  </g>
+  <g stroke="#2a2a2a" stroke-width="14" stroke-linecap="round">
+    <line x1="800" y1="250" x2="800" y2="790"/>
+    <line x1="530" y1="520" x2="1070" y2="520"/>
+    <line x1="610" y1="350" x2="990" y2="690"/>
+    <line x1="990" y1="350" x2="610" y2="690"/>
+  </g>
+  <g opacity="0.85">
+    <rect x="0" y="0" width="1600" height="1000" filter="url(#grain)"/>
+  </g>
+</svg>
+
