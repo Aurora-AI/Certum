@@ -1,11 +1,10 @@
+import { useAppStore } from "@/store/useAppStore";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useRef } from "react";
 
-if (typeof window !== "undefined") {
-  gsap.registerPlugin(ScrollTrigger);
-}
+gsap.registerPlugin(ScrollTrigger);
 
 type GalleryColor = "cyan" | "amber" | "emerald";
 type GalleryTheme = "light" | "dark";
@@ -33,7 +32,10 @@ type GalleryItem =
       color?: GalleryColor;
     };
 
-const COLOR_STYLES: Record<GalleryColor, { glowBg: string; accentText: string }> = {
+const COLOR_STYLES: Record<
+  GalleryColor,
+  { glowBg: string; accentText: string }
+> = {
   cyan: { glowBg: "bg-cyan-500", accentText: "text-cyan-400" },
   amber: { glowBg: "bg-amber-500", accentText: "text-amber-400" },
   emerald: { glowBg: "bg-emerald-500", accentText: "text-emerald-400" },
@@ -123,6 +125,7 @@ const galleryItems: GalleryItem[] = [
 ];
 
 export default function GravityGallery() {
+  const setSection = useAppStore((state) => state.setSection);
   const containerRef = useRef<HTMLDivElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
   const triggerRef = useRef<HTMLDivElement>(null);
@@ -142,12 +145,15 @@ export default function GravityGallery() {
       if (!track || !trigger) return;
 
       const prefersReducedMotion =
-        window.matchMedia?.("(prefers-reduced-motion: reduce)").matches ?? false;
+        window.matchMedia?.("(prefers-reduced-motion: reduce)").matches ??
+        false;
       const scrollFactor = 1.25;
 
-      const getScrollDistance = () => Math.max(0, track.scrollWidth - window.innerWidth);
+      const getScrollDistance = () =>
+        Math.max(0, track.scrollWidth - window.innerWidth);
       const getScrollAmount = () => -getScrollDistance();
-      const getCards = () => cardsRef.current.filter(Boolean) as HTMLDivElement[];
+      const getCards = () =>
+        cardsRef.current.filter(Boolean) as HTMLDivElement[];
 
       const updateSpacers = () => {
         if (!startSpacer || !endSpacer) return;
@@ -188,8 +194,12 @@ export default function GravityGallery() {
           const opacity = 0.3 + proximity * 0.7;
           const blur = (1 - proximity) * 8;
           const isLight = card.dataset.theme === "light";
-          const activeBorderColor = isLight ? "rgba(0,0,0,0.18)" : "rgba(255,255,255,0.25)";
-          const idleBorderColor = isLight ? "rgba(0,0,0,0.10)" : "rgba(255,255,255,0.06)";
+          const activeBorderColor = isLight
+            ? "rgba(0,0,0,0.18)"
+            : "rgba(255,255,255,0.25)";
+          const idleBorderColor = isLight
+            ? "rgba(0,0,0,0.10)"
+            : "rgba(255,255,255,0.06)";
           const activeShadow = isLight
             ? "0 0 70px rgba(255,255,255,0.18)"
             : "0 0 60px rgba(0,0,0,0.6)";
@@ -235,7 +245,7 @@ export default function GravityGallery() {
         trigger: trigger,
         start: "top top",
         end: "bottom bottom",
-        scrub: prefersReducedMotion ? false : 1.5,
+        scrub: prefersReducedMotion ? false : 1,
         invalidateOnRefresh: true,
         onRefreshInit: updateGhostHeight,
         onRefresh: updateCards,
@@ -266,8 +276,17 @@ export default function GravityGallery() {
         0,
       );
 
+      // Sistema Nervoso: Avisa quando a Gallery está visível
+      ScrollTrigger.create({
+        trigger: containerRef.current,
+        start: "top center",
+        end: "bottom center",
+        onEnter: () => setSection("GALLERY"),
+        onEnterBack: () => setSection("GALLERY"),
+      });
+
       const initialCards = getCards();
-      gsap.set(initialCards, { transformOrigin: "center center" });
+      gsap.set(initialCards, { transformOrigin: "center center", opacity: 1 });
       initialCards.forEach((card) => {
         const image = card.querySelector<HTMLImageElement>(".asset-image");
         if (image) {
@@ -331,7 +350,8 @@ export default function GravityGallery() {
           <div ref={startSpacerRef} className="shrink-0" />
           {galleryItems.map((item, index) => {
             const isLight = item.theme === "light";
-            const fallbackColor = index % 3 === 0 ? "cyan" : index % 3 === 1 ? "amber" : "emerald";
+            const fallbackColor =
+              index % 3 === 0 ? "cyan" : index % 3 === 1 ? "amber" : "emerald";
             const color = (item.color ?? fallbackColor) as GalleryColor;
             const styles = COLOR_STYLES[color];
 
@@ -347,12 +367,14 @@ export default function GravityGallery() {
                   "rounded-sm border overflow-hidden",
                   isLight
                     ? "bg-white text-black shadow-[0_0_40px_rgba(255,255,255,0.12)]"
-                    : "bg-[#0A0A0A]/80 text-white backdrop-blur-md border-white/10 shadow-none",
+                    : "bg-[#0A0A0A] text-white backdrop-blur-md border-white/10 shadow-none",
                   "origin-center will-change-transform",
                   item.type === "PILLAR"
                     ? "w-[40vw] md:w-[30vw] h-[60vh]"
                     : "w-[70vw] md:w-[45vw] h-[60vh]",
+                  "opacity-100",
                 ].join(" ")}
+                style={{ opacity: 1 }}
               >
                 {!isLight ? (
                   <div
@@ -380,7 +402,9 @@ export default function GravityGallery() {
                       0{index + 1} / {item.subtitle}
                     </span>
                     {item.type === "PRODUCT" && (
-                      <span className={["text-[10px] opacity-50"].join(" ")}>Asset Class</span>
+                      <span className={["text-[10px] opacity-50"].join(" ")}>
+                        Asset Class
+                      </span>
                     )}
                     {item.type === "PILLAR" ? (
                       <span
@@ -427,7 +451,12 @@ export default function GravityGallery() {
                       >
                         {item.type === "PILLAR" ? "Potencial" : "Estimativa"}
                       </span>
-                      <span className={["font-mono text-lg", isLight ? "text-black" : "text-white"].join(" ")}>
+                      <span
+                        className={[
+                          "font-mono text-lg",
+                          isLight ? "text-black" : "text-white",
+                        ].join(" ")}
+                      >
                         {item.price}
                       </span>
                     </div>
@@ -435,11 +464,16 @@ export default function GravityGallery() {
                     {item.type === "PILLAR" ? (
                       <div className="flex gap-2">
                         <div
-                          className={["w-2 h-2 rounded-full animate-pulse", isLight ? "bg-black" : "bg-white"].join(
-                            " ",
-                          )}
+                          className={[
+                            "w-2 h-2 rounded-full animate-pulse",
+                            isLight ? "bg-black" : "bg-white",
+                          ].join(" ")}
                         />
-                        <span className={["text-[9px] uppercase tracking-widest opacity-60"].join(" ")}>
+                        <span
+                          className={[
+                            "text-[9px] uppercase tracking-widest opacity-60",
+                          ].join(" ")}
+                        >
                           Núcleo Estratégico
                         </span>
                       </div>
@@ -486,7 +520,9 @@ export default function GravityGallery() {
 
         <div className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-50 mix-blend-difference pointer-events-none">
           <div className="w-[1px] h-12 bg-gradient-to-b from-transparent via-white to-transparent animate-bounce" />
-          <span className="text-[8px] font-mono tracking-widest uppercase">Drag / Scroll</span>
+          <span className="text-[8px] font-mono tracking-widest uppercase">
+            Drag / Scroll
+          </span>
         </div>
       </div>
     </div>

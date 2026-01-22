@@ -38,7 +38,7 @@ export default function CoreArchitecture() {
   return (
     <section
       ref={containerRef}
-      className="relative min-h-[120vh] w-full bg-[#020408] text-slate-200 py-32 overflow-hidden border-t border-slate-900"
+      className="relative min-h-[100vh] w-full bg-[#020408] text-slate-200 py-32 overflow-hidden border-t border-slate-900"
     >
       {/* BACKGROUND GRID (Depth Layer 0) */}
       <div

@@ -9,13 +9,15 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
     <script>
       tailwind.config = {
         theme: {
           extend: {
             fontFamily: {
               sans: ['Inter', 'Arial', 'sans-serif'],
+              serif: ['Playfair Display', 'Georgia', 'serif'],
+              mono: ['JetBrains Mono', 'Courier New', 'monospace'],
             },
             colors: {
               ink: '#050505', // Black Piano (deep)
@@ -40,6 +42,10 @@
       }
     </script>
     <style>
+      html {
+        scroll-behavior: auto;
+      }
+
       body {
         background-color: #FFFFFF;
         color: #050505;
