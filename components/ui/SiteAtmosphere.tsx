@@ -1,88 +1,36 @@
 "use client";
 
-import { useEffect, useRef } from "react";
-import gsap from "gsap";
-
+import { useEffect } from "react";
 import { useUISignals } from "@/hooks/useUISignals";
 
-const MOOD_COLORS = {
-  void: { bg: "#F2F2F2", pattern: 0.05 },
-  warm: { bg: "#F5F0E6", pattern: 0.08 },
-  trust: { bg: "#E6EDF5", pattern: 0.05 },
-  success: { bg: "#E6F5E6", pattern: 0.05 },
-} as const;
-
+// Absolute White Atmosphere: static white canvas with subtle texture overlays
 export function SiteAtmosphere() {
-  const { backgroundMood, accentColor } = useUISignals();
-  const bgRef = useRef<HTMLDivElement>(null);
-  const gridRef = useRef<HTMLDivElement>(null);
+  const { accentColor } = useUISignals();
 
   useEffect(() => {
-    const bg = bgRef.current;
-    if (!bg) return;
-
-    const mode = backgroundMood in MOOD_COLORS ? backgroundMood : "void";
-    const target = MOOD_COLORS[mode as keyof typeof MOOD_COLORS];
-
-    const bgTween = gsap.to(bg, {
-      backgroundColor: target.bg,
-      duration: 2.0,
-      ease: "power2.inOut",
-      overwrite: "auto",
-    });
-
-    const gridTween = gsap.to(gridRef.current, {
-      opacity: target.pattern,
-      duration: 1.5,
-      overwrite: "auto",
-    });
-
-    return () => {
-      bgTween.kill();
-      gridTween.kill();
-    };
-  }, [backgroundMood]);
-
-  useEffect(() => {
-    const root = document.documentElement;
-    root.style.setProperty("--accent-color", accentColor);
-    root.style.setProperty("--accent-color-alpha", hexToRgba(accentColor, 0.35));
+    document.documentElement.style.setProperty("--accent-color", accentColor);
   }, [accentColor]);
 
   return (
-    <div
-      ref={bgRef}
-      className="fixed inset-0 -z-50 pointer-events-none transition-colors"
-      style={{ backgroundColor: MOOD_COLORS.void.bg }}
-    >
+    <div className="fixed inset-0 -z-50 pointer-events-none bg-white">
+      {/* 1. NOISE (very subtle film grain) */}
       <div
-        className="absolute inset-0 opacity-[0.4] mix-blend-multiply pointer-events-none"
+        className="absolute inset-0 opacity-[0.03] mix-blend-darken pointer-events-none"
         style={{ backgroundImage: "url('/assets/noise.svg')" }}
       />
 
+      {/* 2. GRID (mathematical thin strokes) */}
       <div
-        ref={gridRef}
-        className="absolute inset-0 opacity-[0.05] pointer-events-none"
+        className="absolute inset-0 opacity-[0.03] pointer-events-none"
         style={{
-          backgroundImage: "radial-gradient(#000000 1px, transparent 1px)",
-          backgroundSize: "24px 24px",
+          backgroundImage:
+            "linear-gradient(#000 1px, transparent 1px), linear-gradient(90deg, #000 1px, transparent 1px)",
+          backgroundSize: "40px 40px",
         }}
       />
 
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_50%,rgba(0,0,0,0.05)_100%)] pointer-events-none" />
+      {/* 3. White vignette to focus center */}
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,white_120%)] pointer-events-none" />
     </div>
   );
-}
-
-function hexToRgba(hex: string, alpha: number) {
-  const normalized = hex.trim().replace("#", "");
-  if (normalized.length !== 6) return `rgba(201, 162, 39, ${alpha})`;
-
-  const r = Number.parseInt(normalized.slice(0, 2), 16);
-  const g = Number.parseInt(normalized.slice(2, 4), 16);
-  const b = Number.parseInt(normalized.slice(4, 6), 16);
-
-  if ([r, g, b].some((v) => Number.isNaN(v))) return `rgba(201, 162, 39, ${alpha})`;
-
-  return `rgba(${r}, ${g}, ${b}, ${alpha})`;
 }

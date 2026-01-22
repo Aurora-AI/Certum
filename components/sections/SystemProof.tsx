@@ -186,7 +186,7 @@ export default function SystemProof() {
     <section
       ref={sectionRef}
       id="system-proof"
-      className="relative py-24 md:py-32 bg-[#F2F2F2]"
+      className="relative py-24 md:py-32 bg-transparent"
       aria-label="System Proof - Dashboard de Performance"
     >
       {/* Trust atmosphere overlay */}

@@ -9,7 +9,7 @@ export function useUISignals() {
 
   const classes = useMemo(() => {
     const backgroundClasses: Record<UISignals["backgroundMood"], string> = {
-      void: "bg-[#F2F2F2]",
+      void: "bg-[#FFFFFF]",
       warm: "bg-[#F5F0E6]",
       trust: "bg-[#E6EDF5]",
       success: "bg-[#E6F5E6]",

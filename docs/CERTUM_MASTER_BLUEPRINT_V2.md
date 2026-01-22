@@ -2,7 +2,7 @@
 
 ## Manual de Design da Plataforma
 
-**Versão:** 2.0 (Sovereign Light)  
+**Versão:** 2.0 (Absolute White)  
 **Data:** 22/01/2026  
 **Visual Standard:** High Finance Architecture  
 **Target Score:** 9.0+ (Superar Linear, Stripe, Apple)
@@ -23,7 +23,7 @@ SUA BÍBLIA: O arquivo `docs/CERTUM_MASTER_BLUEPRINT_V2.md`.
 ---
 
 1. CONSULTE A FONTE: Antes de escrever qualquer componente, LEIA `docs/CERTUM_MASTER_BLUEPRINT_V2.md`. Se o código não seguir o Blueprint, ele está errado.
-2. VISUAL STANDARD: "SOVEREIGN LIGHT" (Off-White `#F2F2F2` + Grid Técnico).
+2. VISUAL STANDARD: "ABSOLUTE WHITE" (Canvas `#FFFFFF` + Grid Técnico).
 
 - 🚫 PROIBIDO: Fundos pretos sólidos (exceto no Footer/Bloco 6).
 - 🚫 PROIBIDO: Estilo "SaaS Genérico" ou "Bootstrap".
@@ -94,7 +94,7 @@ Analisando os frames do Hero atual, extraí os **Tokens de Design Invioláveis**
 │  │  VISLUMBRAR FUTURO (anchor link)                    │ BY INVITE   │  │
 │  └──────────────────────────────────────────────────────────────────────┘  │
 │                                                                             │
-│  BACKGROUND: Off-White (#F2F2F2) com ghost image de casa/plantas           │
+│  BACKGROUND: Absolute White (#FFFFFF) com ghost image de casa/plantas           │
 │                                                                             │
 └─────────────────────────────────────────────────────────────────────────────┘
 ```
@@ -105,7 +105,7 @@ Analisando os frames do Hero atual, extraí os **Tokens de Design Invioláveis**
 
 | TOKEN                  | VALOR                         | USO                       |
 | ---------------------- | ----------------------------- | ------------------------- |
-| **Background Primary** | `#F2F2F2` (Off-White Técnico) | Atmosfera geral           |
+| **Background Primary** | `#FFFFFF` (Absolute White) | Atmosfera geral           |
 | **Text Primary**       | `#1A1A1A` (Near Black)        | Headlines, body           |
 | **Text Muted**         | `#8A8A8A` (Gray 500)          | Labels, captions          |
 | **Accent Data**        | `#00C853` (Emerald)           | Números positivos, yields |
