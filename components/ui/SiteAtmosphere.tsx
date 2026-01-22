@@ -1,36 +1,45 @@
+"use client";
+
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
 
 import { useUISignals } from "@/hooks/useUISignals";
 
-const MOOD_COLORS: Record<
-  "void" | "warm" | "trust" | "success",
-  { bg: string }
-> = {
-  void: { bg: "#050505" },
-  warm: { bg: "#0f0a05" },
-  trust: { bg: "#050a14" },
-  success: { bg: "#050f05" },
-};
+const MOOD_COLORS = {
+  void: { bg: "#F2F2F2", pattern: 0.05 },
+  warm: { bg: "#F5F0E6", pattern: 0.08 },
+  trust: { bg: "#E6EDF5", pattern: 0.05 },
+  success: { bg: "#E6F5E6", pattern: 0.05 },
+} as const;
 
 export function SiteAtmosphere() {
   const { backgroundMood, accentColor } = useUISignals();
   const bgRef = useRef<HTMLDivElement>(null);
+  const gridRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const bg = bgRef.current;
     if (!bg) return;
 
-    const target = MOOD_COLORS[backgroundMood] ?? MOOD_COLORS.void;
-    const tween = gsap.to(bg, {
+    const mode = backgroundMood in MOOD_COLORS ? backgroundMood : "void";
+    const target = MOOD_COLORS[mode as keyof typeof MOOD_COLORS];
+
+    const bgTween = gsap.to(bg, {
       backgroundColor: target.bg,
-      duration: 2.5,
+      duration: 2.0,
       ease: "power2.inOut",
       overwrite: "auto",
     });
 
+    const gridTween = gsap.to(gridRef.current, {
+      opacity: target.pattern,
+      duration: 1.5,
+      overwrite: "auto",
+    });
+
     return () => {
-      tween.kill();
+      bgTween.kill();
+      gridTween.kill();
     };
   }, [backgroundMood]);
 
@@ -43,22 +52,24 @@ export function SiteAtmosphere() {
   return (
     <div
       ref={bgRef}
-      className="fixed inset-0 -z-50 pointer-events-none"
+      className="fixed inset-0 -z-50 pointer-events-none transition-colors"
       style={{ backgroundColor: MOOD_COLORS.void.bg }}
     >
       <div
-        className="absolute inset-0 opacity-[0.04] mix-blend-overlay sovereign-grain"
+        className="absolute inset-0 opacity-[0.4] mix-blend-multiply pointer-events-none"
         style={{ backgroundImage: "url('/assets/noise.svg')" }}
       />
 
       <div
-        className="absolute inset-0 opacity-40"
+        ref={gridRef}
+        className="absolute inset-0 opacity-[0.05] pointer-events-none"
         style={{
-          background:
-            "radial-gradient(circle at 50% 0%, var(--accent-color-alpha) 0%, transparent 60%)",
-          mixBlendMode: "screen",
+          backgroundImage: "radial-gradient(#000000 1px, transparent 1px)",
+          backgroundSize: "24px 24px",
         }}
       />
+
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_50%,rgba(0,0,0,0.05)_100%)] pointer-events-none" />
     </div>
   );
 }
@@ -75,4 +86,3 @@ function hexToRgba(hex: string, alpha: number) {
 
   return `rgba(${r}, ${g}, ${b}, ${alpha})`;
 }
-

@@ -1,16 +1,5 @@
 html {
   scroll-behavior: smooth;
-  scroll-snap-type: y mandatory;
-}
-
-body {
-  scroll-snap-type: y mandatory;
-}
-
-main > div,
-main > section {
-  scroll-snap-align: start;
-  scroll-snap-stop: always;
 }
 
 /* Optional: immersion */
@@ -18,4 +7,3 @@ main > section {
   width: 0px;
   background: transparent;
 }
-

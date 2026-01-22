@@ -1,12 +1,23 @@
+// ═══════════════════════════════════════════════════════════════════════════
+// CERTUM WEALTH V2 — SOVEREIGN LIGHT ARCHITECTURE
+// Blueprint: docs/CERTUM_MASTER_BLUEPRINT_V2.md
+// ═══════════════════════════════════════════════════════════════════════════
+
+// 1. COMPONENTES ORIGINAIS MAD AURORA (Intocáveis)
 import Hero from "@/components/Hero";
-import CoreArchitecture from "@/components/sections/CoreArchitecture";
-import GravityGallery from "@/components/sections/GravityGallery";
+import TheConcierge from "@/components/features/TheConcierge";
 import KineticMenu from "@/components/ui/KineticMenu";
-import TacticalFooter from "@/components/ui/TacticalFooter";
+import { SiteAtmosphere } from "@/components/ui/SiteAtmosphere";
+
+// 2. BLOCOS DO BLUEPRINT V2
+import GenesisProtocol from "@/components/sections/GenesisProtocol";
+import HallOfClarity from "@/components/sections/HallOfClarity";
+import MissionCommand from "@/components/sections/MissionCommand";
+import SystemProof from "@/components/sections/SystemProof";
+import TheVault from "@/components/sections/TheVault";
+
 import { useLenis } from "@/hooks/useLenis";
 import { useEffect } from "react";
-import TheConcierge from "@/components/features/TheConcierge";
-import { SiteAtmosphere } from "@/components/ui/SiteAtmosphere";
 
 function App() {
   // Initialize Lenis smooth scroll
@@ -22,9 +33,11 @@ function App() {
   }, []);
 
   return (
-    <main className="relative min-h-screen text-slate-200 selection:bg-cyan-500 selection:text-black overflow-x-hidden">
+    <main className="relative min-h-screen text-[#1A1A1A] selection:bg-[#C9A227] selection:text-white overflow-x-hidden">
+      {/* ═══ ATMOSFERA SOVEREIGN LIGHT ═══ */}
       <SiteAtmosphere />
-      {/* 1. NAVEGAÇÃO E LOGO (Global) */}
+
+      {/* ═══ NAVEGAÇÃO GLOBAL ═══ */}
       <div className="fixed top-8 left-8 z-50 mix-blend-difference pointer-events-none">
         <span className="font-serif text-2xl font-bold tracking-tight text-white">
           CERTUM
@@ -32,30 +45,40 @@ function App() {
       </div>
       <KineticMenu />
 
-      {/* 2. HERO (A Promessa) */}
-      <div id="CORE_01" className="relative z-10">
+      {/* ═══ BLOCO 1: HERO (A Promessa) — INTOCÁVEL ═══ */}
+      <section id="HERO" className="relative z-10">
         <Hero />
-      </div>
+      </section>
 
-      {/* 3. THE CONCIERGE (Ponto de Inflexão) */}
-      <div id="CONCIERGE" className="pt-32 pb-10 relative z-30">
+      {/* ═══ BLOCO 2: HALL OF CLARITY (3 Pilares) ═══ */}
+      <section id="HALL_OF_CLARITY" className="relative z-10">
+        <HallOfClarity />
+      </section>
+
+      {/* ═══ BLOCO 3: THE VAULT (Galeria de Ativos) ═══ */}
+      <section id="THE_VAULT" className="relative z-10">
+        <TheVault />
+      </section>
+
+      {/* ═══ BLOCO 4: GENESIS PROTOCOL (Timeline 3 Fases) ═══ */}
+      <section id="GENESIS_PROTOCOL" className="relative z-10">
+        <GenesisProtocol />
+      </section>
+
+      {/* ═══ BLOCO 5: SYSTEM PROOF (Dashboard de Performance) ═══ */}
+      <section id="SYSTEM_PROOF" className="relative z-10">
+        <SystemProof />
+      </section>
+
+      {/* ═══ THE CONCIERGE (Elysian AI) ═══ */}
+      <section id="CONCIERGE" className="pt-16 pb-10 relative z-30">
         <TheConcierge />
-      </div>
+      </section>
 
-      {/* 3. GALERIA (O "Black Void" corrigido) */}
-      <div id="GALLERY" className="relative z-20">
-        <GravityGallery />
-      </div>
-
-      {/* 4. ARQUITETURA (O "Controle Manual" corrigido) */}
-      <div id="CORE_03" className="relative z-20">
-        <CoreArchitecture />
-      </div>
-
-      {/* 5. RODAPÉ TÁTICO (O Encerramento Único) */}
-      <div className="relative z-30">
-        <TacticalFooter />
-      </div>
+      {/* ═══ BLOCO 6: MISSION COMMAND (Footer Dark) ═══ */}
+      <footer className="relative z-30">
+        <MissionCommand />
+      </footer>
     </main>
   );
 }

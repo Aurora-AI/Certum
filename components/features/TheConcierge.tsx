@@ -24,19 +24,21 @@ export default function TheConcierge() {
   }, [history]);
 
   return (
-    <section className="relative h-screen w-full flex overflow-hidden snap-start bg-[#050505]">
-      <div className="hidden lg:block w-1/2 h-full relative border-r border-white/5">
-        <DreamStream />
+    <section className="relative min-h-screen w-full flex bg-[#050505]">
+      <div className="hidden lg:block w-1/2 relative border-r border-white/5">
+        <div className="sticky top-0 h-screen w-full overflow-hidden relative">
+          <DreamStream />
 
-        <div className="absolute bottom-12 left-12 z-30 max-w-sm">
-          <h3 className="text-white font-serif text-3xl mb-2 mix-blend-difference">
-            Materialize o impossível.
-          </h3>
-          <p className="text-white/60 text-sm font-mono">// Acesso a inventário off-market</p>
+          <div className="absolute bottom-12 left-12 z-30 max-w-sm">
+            <h3 className="text-white font-serif text-3xl mb-2 mix-blend-difference">
+              Materialize o impossível.
+            </h3>
+            <p className="text-white/60 text-sm font-mono">// Acesso a inventário off-market</p>
+          </div>
         </div>
       </div>
 
-      <div className="w-full lg:w-1/2 h-full flex flex-col justify-center items-center relative z-30 px-6 lg:px-20">
+      <div className="w-full lg:w-1/2 flex flex-col justify-center items-center relative z-30 px-6 lg:px-20 py-20">
         <div
           className={[
             "mb-8 w-12 h-12 rounded-full blur-xl transition-all duration-1000",

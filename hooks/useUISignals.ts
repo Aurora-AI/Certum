@@ -9,10 +9,10 @@ export function useUISignals() {
 
   const classes = useMemo(() => {
     const backgroundClasses: Record<UISignals["backgroundMood"], string> = {
-      void: "bg-[#0A0A0A]",
-      warm: "bg-gradient-to-b from-[#0A0A0A] to-[#1A1A0A]",
-      trust: "bg-gradient-to-b from-[#0A0A0A] to-[#0A0A1A]",
-      success: "bg-gradient-to-b from-[#0A0A0A] to-[#0A1A0A]",
+      void: "bg-[#F2F2F2]",
+      warm: "bg-[#F5F0E6]",
+      trust: "bg-[#E6EDF5]",
+      success: "bg-[#E6F5E6]",
     };
 
     return {
@@ -28,4 +28,3 @@ export function useUISignals() {
     classes,
   };
 }
-

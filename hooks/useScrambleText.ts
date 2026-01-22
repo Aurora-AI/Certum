@@ -6,11 +6,12 @@ interface ScrambleOptions {
   duration?: number;
   delay?: number;
   speed?: number;
+  active?: boolean;
 }
 
 export const useScrambleText = (
   finalText: string,
-  { duration = 1.5, delay = 0, speed = 50 }: ScrambleOptions = {},
+  { duration = 1.5, delay = 0, speed = 50, active = true }: ScrambleOptions = {},
 ) => {
   const [displayText, setDisplayText] = useState(() =>
     finalText.replace(/[^\s]/g, ' '),
@@ -25,6 +26,11 @@ export const useScrambleText = (
   useEffect(() => {
     if (timeoutRef.current) clearTimeout(timeoutRef.current);
     if (intervalRef.current) clearInterval(intervalRef.current);
+
+    if (!active) {
+      setDisplayText(finalText.replace(/[^\s]/g, ' '));
+      return;
+    }
 
     setDisplayText(
       finalText
@@ -64,8 +70,7 @@ export const useScrambleText = (
       if (timeoutRef.current) clearTimeout(timeoutRef.current);
       if (intervalRef.current) clearInterval(intervalRef.current);
     };
-  }, [finalText, duration, delay, speed]);
+  }, [finalText, duration, delay, speed, active]);
 
   return displayText;
 };
-
