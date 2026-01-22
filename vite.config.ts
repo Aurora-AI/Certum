@@ -21,6 +21,24 @@ export default defineConfig(({ mode }) => {
           '@': path.resolve(__dirname, '.'),
         }
       },
+      build: {
+        chunkSizeWarningLimit: 700,
+        rollupOptions: {
+          output: {
+            manualChunks(id) {
+              if (id.includes('node_modules')) {
+                if (id.includes('react')) return 'vendor_react';
+                if (id.includes('gsap')) return 'vendor_gsap';
+                if (id.includes('recharts')) return 'vendor_recharts';
+                if (id.includes('framer-motion')) return 'vendor_framer';
+                if (id.includes('lucide-react')) return 'vendor_icons';
+                if (id.includes('zustand')) return 'vendor_state';
+                return 'vendor_misc';
+              }
+            }
+          }
+        }
+      },
       test: {
         globals: true,
         environment: 'jsdom',
