@@ -5,8 +5,8 @@ const CTA: React.FC = () => {
   const pathRef2 = useRef<SVGPathElement>(null);
 
   useEffect(() => {
-    const gsap = (window as any).gsap;
-    const ScrollTrigger = (window as any).ScrollTrigger;
+    const gsap = window.gsap;
+    const ScrollTrigger = window.ScrollTrigger;
     
     if (gsap && ScrollTrigger && pathRef1.current && pathRef2.current) {
         const paths = [pathRef1.current, pathRef2.current];

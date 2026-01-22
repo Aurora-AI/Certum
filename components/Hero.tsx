@@ -16,7 +16,7 @@ const Hero: React.FC = () => {
   const scrambledLine2 = useScrambleText('Architecture.', { duration: 1.5, delay: 2.0, speed: 40 });
 
   useEffect(() => {
-    const gsap = (window as any).gsap;
+    const gsap = window.gsap;
     if (!gsap) {
       if (blendBgRef.current) blendBgRef.current.style.opacity = '1';
       if (blendTextRef.current) blendTextRef.current.style.opacity = '1';

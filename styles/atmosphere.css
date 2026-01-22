@@ -1,0 +1,51 @@
+:root {
+  --bg-primary: #0a0a0a;
+  --bg-secondary: #0a0a0a;
+  --accent-color: #c9a227;
+  --accent-color-alpha: rgba(201, 162, 39, 0.3);
+  --transition-glow: 0;
+
+  --void-black: #0a0a0a;
+  --antique-gold: #c9a227;
+  --trust-blue: #4a9cc9;
+  --success-green: #27c96b;
+  --white: #ffffff;
+}
+
+.accent-text {
+  color: var(--accent-color);
+}
+
+.accent-bg {
+  background-color: var(--accent-color);
+}
+
+.accent-border {
+  border-color: var(--accent-color);
+}
+
+.accent-glow {
+  box-shadow: 0 0 30px var(--accent-color-alpha);
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 4px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: var(--accent-color-alpha);
+  border-radius: 2px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-color);
+}
+
+.site-atmosphere * {
+  transition-property: none;
+}
+

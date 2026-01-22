@@ -1,13 +1,13 @@
 import React, { useEffect, useRef, useState } from 'react';
 import OrbitalIllustration from './OrbitalIllustration';
 import { FeatureData } from '../types';
-import { Zap, Shield, Anchor } from 'lucide-react';
+import { Anchor, Shield, Zap, type LucideIcon } from 'lucide-react';
 
 interface FeatureRailProps {
   features: FeatureData[];
 }
 
-const IconMap: Record<string, React.FC<any>> = {
+const IconMap: Record<string, LucideIcon> = {
   kamino: Zap,
   drift: Shield,
   jupiter: Anchor,
@@ -18,14 +18,14 @@ const FeatureRail: React.FC<FeatureRailProps> = ({ features }) => {
   const [activeIndex, setActiveIndex] = useState(0);
 
   useEffect(() => {
-    const gsap = (window as any).gsap;
-    const ScrollTrigger = (window as any).ScrollTrigger;
+    const gsap = window.gsap;
+    const ScrollTrigger = window.ScrollTrigger;
 
     if (!gsap || !ScrollTrigger || !containerRef.current) return;
     gsap.registerPlugin(ScrollTrigger);
 
     const textSections = containerRef.current.querySelectorAll('.feature-text-block');
-    const triggers: any[] = [];
+    const triggers: Array<{ kill: () => void }> = [];
 
     textSections.forEach((section, index) => {
       gsap.set(section, { opacity: 0.2 });
@@ -44,7 +44,8 @@ const FeatureRail: React.FC<FeatureRailProps> = ({ features }) => {
         },
       });
 
-      if (tween?.scrollTrigger) triggers.push(tween.scrollTrigger);
+      const maybeTrigger = (tween as { scrollTrigger?: unknown }).scrollTrigger;
+      if (isKillable(maybeTrigger)) triggers.push(maybeTrigger);
     });
 
     return () => {
@@ -131,5 +132,11 @@ const FeatureRail: React.FC<FeatureRailProps> = ({ features }) => {
     </section>
   );
 };
+
+function isKillable(value: unknown): value is { kill: () => void } {
+  if (typeof value !== "object" || value === null) return false;
+  if (!("kill" in value)) return false;
+  return typeof (value as { kill?: unknown }).kill === "function";
+}
 
 export default FeatureRail;

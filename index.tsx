@@ -1,6 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
+import { SiteStateProvider } from "@/providers/SiteStateProvider";
+import "@/styles/atmosphere.css";
+import "@/styles/scrollSnap.css";
 
 const rootElement = document.getElementById('root');
 if (!rootElement) {
@@ -10,6 +13,8 @@ if (!rootElement) {
 const root = ReactDOM.createRoot(rootElement);
 root.render(
   <React.StrictMode>
-    <App />
+    <SiteStateProvider>
+      <App />
+    </SiteStateProvider>
   </React.StrictMode>
 );

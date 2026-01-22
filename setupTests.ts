@@ -7,12 +7,12 @@ class ResizeObserverMock {
   unobserve() {}
   disconnect() {}
 }
-window.ResizeObserver = ResizeObserverMock as any;
+window.ResizeObserver = ResizeObserverMock as unknown as typeof ResizeObserver;
 
 // 2. Mock do window.matchMedia (Necessário para temas/responsividade)
 Object.defineProperty(window, 'matchMedia', {
   writable: true,
-  value: vi.fn().mockImplementation(query => ({
+  value: vi.fn().mockImplementation((query: string) => ({
     matches: false,
     media: query,
     onchange: null,
@@ -33,10 +33,10 @@ class IntersectionObserverMock {
   unobserve() {}
   disconnect() {}
 }
-window.IntersectionObserver = IntersectionObserverMock as any;
+window.IntersectionObserver = IntersectionObserverMock as unknown as typeof IntersectionObserver;
 
 // 5. Mock do requestAnimationFrame (necessário para animações)
-window.requestAnimationFrame = vi.fn((cb) => {
+window.requestAnimationFrame = vi.fn((cb: FrameRequestCallback) => {
   cb(0);
   return 0;
 });

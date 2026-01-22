@@ -4,8 +4,8 @@ const Statement: React.FC = () => {
   const textRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const gsap = (window as any).gsap;
-    const ScrollTrigger = (window as any).ScrollTrigger;
+    const gsap = window.gsap;
+    const ScrollTrigger = window.ScrollTrigger;
 
     if (gsap && ScrollTrigger && textRef.current) {
         gsap.fromTo(textRef.current,

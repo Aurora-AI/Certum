@@ -6,6 +6,20 @@ interface PuzzleAssemblerProps {
   className?: string;
 }
 
+function getImageDimensions(image: unknown): { width: number; height: number } {
+  if (typeof image !== "object" || image === null) return { width: 1, height: 1 };
+  const maybe = image as { width?: unknown; height?: unknown };
+  const width = typeof maybe.width === "number" && Number.isFinite(maybe.width) ? maybe.width : 1;
+  const height = typeof maybe.height === "number" && Number.isFinite(maybe.height) ? maybe.height : 1;
+  return { width, height };
+}
+
+function getTextureDimensions(texture: THREE.Texture | null): { width: number; height: number } {
+  if (!texture) return { width: 1, height: 1 };
+  const image = (texture as unknown as { image?: unknown }).image;
+  return getImageDimensions(image);
+}
+
 const vertexShader = `
   uniform float time;
   uniform float progress;
@@ -79,7 +93,7 @@ const PuzzleAssembler: React.FC<PuzzleAssemblerProps> = ({ imageSrc, className }
       time: { value: 0 },
       progress: { value: 0 },
       mouse: { value: new THREE.Vector2(999, 999) },
-      uTexture: { value: null as unknown as THREE.Texture },
+      uTexture: { value: null as THREE.Texture | null },
     };
 
     const material = new THREE.ShaderMaterial({
@@ -111,9 +125,7 @@ const PuzzleAssembler: React.FC<PuzzleAssemblerProps> = ({ imageSrc, className }
 
       if (!texture || !particles) return;
 
-      const img = (texture as any).image as { width?: number; height?: number } | undefined;
-      const imgW = img?.width ?? 1;
-      const imgH = img?.height ?? 1;
+      const { width: imgW, height: imgH } = getTextureDimensions(texture);
       const imageAspect = imgW / imgH;
       const containerAspect = width / height;
 
@@ -131,9 +143,7 @@ const PuzzleAssembler: React.FC<PuzzleAssemblerProps> = ({ imageSrc, className }
     const buildParticles = () => {
       if (!texture) return;
 
-      const img = (texture as any).image as { width?: number; height?: number } | undefined;
-      const imgW = img?.width ?? 1;
-      const imgH = img?.height ?? 1;
+      const { width: imgW, height: imgH } = getTextureDimensions(texture);
       const aspect = imgW / imgH;
 
       const rows = 120;

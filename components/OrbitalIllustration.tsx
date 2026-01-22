@@ -44,10 +44,10 @@ const OrbitalIllustration: React.FC<OrbitalProps> = ({ activeIndex = 0 }) => {
   const coreShadowGradientId = `${reactId}-core-shadow`;
 
   useEffect(() => {
-    const gsap = (window as any).gsap;
+    const gsap = window.gsap;
     if (!gsap) return;
 
-    const tweens: any[] = [];
+    const tweens: Array<{ kill?: () => void }> = [];
 
     if (orbitGroupRef.current) {
       tweens.push(
@@ -91,7 +91,7 @@ const OrbitalIllustration: React.FC<OrbitalProps> = ({ activeIndex = 0 }) => {
     }
 
     return () => {
-      tweens.forEach((t) => t?.kill?.());
+      tweens.forEach((t) => t.kill?.());
     };
   }, []);
 

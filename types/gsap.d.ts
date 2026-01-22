@@ -1,7 +1,7 @@
 // Ensina ao TypeScript que o Window pode ter propriedades globais do GSAP
 interface Window {
-  gsap: typeof import('gsap').gsap;
-  ScrollTrigger: typeof import('gsap/ScrollTrigger').ScrollTrigger;
+  gsap?: typeof import('gsap').gsap;
+  ScrollTrigger?: typeof import('gsap/ScrollTrigger').ScrollTrigger;
 }
 
 // Corrige importações de módulos sem tipos definidos (se houver)

@@ -22,7 +22,7 @@ export default function SovereignResidence({ className }: SovereignResidenceProp
       return;
     }
 
-    const gsap = (window as any).gsap;
+    const gsap = window.gsap;
     if (!gsap) {
       video.style.transition = 'filter 1200ms cubic-bezier(0.2, 0.8, 0.2, 1), transform 1200ms cubic-bezier(0.2, 0.8, 0.2, 1)';
       video.style.filter = to.filter;
@@ -43,7 +43,7 @@ export default function SovereignResidence({ className }: SovereignResidenceProp
     const video = videoRef.current;
     if (!video) return;
 
-    const gsap = (window as any).gsap;
+    const gsap = window.gsap;
     if (gsap) {
       gsap.set(video, { filter: NOIR_FILTER, scale: 1, transformOrigin: '50% 50%' });
     } else {
