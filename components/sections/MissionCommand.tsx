@@ -118,23 +118,23 @@ export default function MissionCommand() {
     <section
       ref={sectionRef}
       id="mission-command"
-      className="relative bg-[#050505] text-white overflow-hidden"
+      className="relative bg-white text-black overflow-hidden"
       aria-label="Mission Command - Footer"
     >
-      {/* Subtle grid overlay */}
+      {/* Subtle grid overlay (dark strokes) */}
       <div
         className="absolute inset-0 opacity-[0.03] pointer-events-none"
         style={{
           backgroundImage: `
-            linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)
+            linear-gradient(rgba(0,0,0,0.03) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(0,0,0,0.03) 1px, transparent 1px)
           `,
           backgroundSize: "60px 60px",
         }}
       />
 
       {/* CTA Section */}
-      <div className="relative border-b border-white/10">
+      <div className="relative border-b border-black/10">
         <div className="max-w-[1800px] mx-auto px-6 md:px-12 py-24 md:py-32">
           <div ref={ctaRef} className="max-w-3xl mx-auto text-center">
             {/* Eyebrow */}
@@ -148,7 +148,7 @@ export default function MissionCommand() {
             </h2>
 
             {/* Description */}
-            <p className="mt-8 text-lg md:text-xl text-white/60 leading-relaxed max-w-xl mx-auto">
+            <p className="mt-8 text-lg md:text-xl text-black/60 leading-relaxed max-w-xl mx-auto">
               O momento de construir seu legado é agora. Agende sua sessão de
               arquitetura patrimonial com um especialista Certum.
             </p>
@@ -156,10 +156,10 @@ export default function MissionCommand() {
             {/* CTAs */}
             <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
               <button
-                className="group relative px-10 py-5 bg-[#C9A227] text-[#050505] 
+                className="group relative px-10 py-5 bg-black text-white 
                          text-sm font-bold uppercase tracking-[0.2em]
                          overflow-hidden transition-all duration-300
-                         hover:bg-[#D4AF37] hover:scale-105"
+                         hover:bg-[#333] hover:scale-105"
               >
                 <span className="relative z-10 flex items-center gap-3">
                   Agendar Sessão Estratégica
@@ -169,10 +169,10 @@ export default function MissionCommand() {
 
               <a
                 href="tel:08001234567"
-                className="flex items-center gap-3 px-8 py-5 border border-white/20
+                className="flex items-center gap-3 px-8 py-5 border border-black/10
                          text-sm font-mono uppercase tracking-[0.15em]
                          transition-all duration-300
-                         hover:border-white/40 hover:bg-white/5"
+                         hover:border-black/20 hover:bg-black/5"
               >
                 <Phone className="w-4 h-4" />
                 0800 123 4567
@@ -180,7 +180,7 @@ export default function MissionCommand() {
             </div>
 
             {/* Trust indicator */}
-            <p className="mt-8 font-mono text-[10px] uppercase tracking-[0.3em] text-white/30">
+            <p className="mt-8 font-mono text-[10px] uppercase tracking-[0.3em] text-black/30">
               Atendimento exclusivo por convite • Seg-Sex 9h-18h
             </p>
           </div>
@@ -196,7 +196,7 @@ export default function MissionCommand() {
               <div className="font-serif text-3xl font-bold tracking-tight">
                 CERTUM<span className="text-[#C9A227]">.</span>
               </div>
-              <p className="mt-4 text-sm text-white/40 leading-relaxed max-w-xs">
+              <p className="mt-4 text-sm text-black/60 leading-relaxed max-w-xs">
                 Wealth Architecture by Rodobens. A engenharia patrimonial para
                 quem pensa em gerações.
               </p>
@@ -205,7 +205,7 @@ export default function MissionCommand() {
               <div className="mt-8 space-y-3">
                 <a
                   href="mailto:private@certum.com.br"
-                  className="flex items-center gap-3 text-sm text-white/60 hover:text-[#C9A227] transition-colors"
+                  className="flex items-center gap-3 text-sm text-black/60 hover:text-[#C9A227] transition-colors"
                   data-footer-link
                 >
                   <Mail className="w-4 h-4" />
@@ -225,7 +225,7 @@ export default function MissionCommand() {
             <div className="md:col-span-8 grid grid-cols-2 md:grid-cols-3 gap-8">
               {FOOTER_COLUMNS.map((column) => (
                 <div key={column.title}>
-                  <h3 className="font-mono text-[10px] uppercase tracking-[0.3em] text-white/30 mb-6">
+                  <h3 className="font-mono text-[10px] uppercase tracking-[0.3em] text-black/30 mb-6">
                     {column.title}
                   </h3>
                   <ul className="space-y-3">
@@ -233,7 +233,7 @@ export default function MissionCommand() {
                       <li key={link.label} data-footer-link>
                         <a
                           href={link.href}
-                          className="text-sm text-white/60 hover:text-[#C9A227] transition-colors"
+                          className="text-sm text-black/60 hover:text-[#C9A227] transition-colors"
                         >
                           {link.label}
                         </a>

@@ -5,7 +5,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 import { ConnectionLine } from "@/components/ui/ConnectionLine";
-import { KineticHeading } from "@/components/ui/KineticHeading";
+import { KineticHeading } from "@/components/ui/KineticHeadingNew";
 import { NumberTicker } from "@/components/ui/NumberTicker";
 import { PillarCard } from "@/components/ui/PillarCard";
 

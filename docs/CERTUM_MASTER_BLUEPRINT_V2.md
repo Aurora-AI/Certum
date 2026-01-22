@@ -105,7 +105,7 @@ Analisando os frames do Hero atual, extraí os **Tokens de Design Invioláveis**
 
 | TOKEN                  | VALOR                         | USO                       |
 | ---------------------- | ----------------------------- | ------------------------- |
-| **Background Primary** | `#FFFFFF` (Absolute White) | Atmosfera geral           |
+| **Background Primary** | `#FFFFFF` (Absolute White)    | Atmosfera geral           |
 | **Text Primary**       | `#1A1A1A` (Near Black)        | Headlines, body           |
 | **Text Muted**         | `#8A8A8A` (Gray 500)          | Labels, captions          |
 | **Accent Data**        | `#00C853` (Emerald)           | Números positivos, yields |

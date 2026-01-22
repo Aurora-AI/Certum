@@ -1,6 +1,6 @@
 "use client";
 
-import { KineticHeading } from "@/components/ui/KineticHeading";
+import { KineticHeading } from "@/components/ui/KineticHeadingNew";
 import { NumberTicker } from "@/components/ui/NumberTicker";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -49,7 +49,7 @@ function DataCard({
       data-data-card
       className={`
         ${sizeClasses[size]}
-        bg-white border border-[#E5E5E5] p-6 md:p-8
+        bg-transparent border border-black/5 p-6 md:p-8
         transition-all duration-300
         hover:shadow-xl hover:shadow-black/5 hover:border-[#C9A227]/30
         group
@@ -117,10 +117,10 @@ function QuoteCard() {
   return (
     <div
       data-data-card
-      className="col-span-1 md:col-span-3 bg-[#FAFAFA] border border-[#E5E5E5] p-8 md:p-12"
+      className="col-span-1 md:col-span-3 bg-transparent border border-black/5 p-8 md:p-12"
     >
       <blockquote className="relative">
-        <span className="absolute -top-4 -left-2 text-6xl text-[#E5E5E5] font-serif">
+        <span className="absolute -top-4 -left-2 text-6xl text-black/10 font-serif">
           "
         </span>
         <p className="text-xl md:text-2xl text-[#1A1A1A] leading-relaxed font-medium pl-8">

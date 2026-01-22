@@ -1,7 +1,7 @@
 "use client";
 
-import { useEffect } from "react";
 import { useUISignals } from "@/hooks/useUISignals";
+import { useEffect } from "react";
 
 // Absolute White Atmosphere: static white canvas with subtle texture overlays
 export function SiteAtmosphere() {

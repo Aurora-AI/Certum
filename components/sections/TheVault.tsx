@@ -1,6 +1,6 @@
 "use client";
 
-import { KineticHeading } from "@/components/ui/KineticHeading";
+import { KineticHeading } from "@/components/ui/KineticHeadingNew";
 import gsap from "gsap";
 import { Draggable } from "gsap/Draggable";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -225,8 +225,8 @@ export default function TheVault() {
                   cardsRef.current[index] = el;
                 }}
                 className={`
-                  relative flex-shrink-0 w-[320px] md:w-[380px] 
-                  bg-white border border-[#E5E5E5] rounded-sm
+                  relative flex-shrink-0 w-[320px] md:w-[380px]
+                  bg-transparent border border-black/5 rounded-sm
                   transition-shadow duration-300
                   hover:shadow-2xl hover:shadow-black/10
                   group
@@ -247,13 +247,12 @@ export default function TheVault() {
                         {item.category}
                       </span>
                     </div>
-                  </div>
 
-                  {/* Category Badge */}
-                  <div className="absolute top-4 left-4 px-3 py-1.5 bg-white/90 backdrop-blur-sm">
-                    <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-[#1A1A1A]">
-                      {item.category}
-                    </span>
+                    <div className="absolute top-4 left-4 px-3 py-1.5 bg-white/80 backdrop-blur-sm">
+                      <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-[#1A1A1A]">
+                        {item.category}
+                      </span>
+                    </div>
                   </div>
                 </div>
 
@@ -283,9 +282,9 @@ export default function TheVault() {
                   </div>
 
                   <button
-                    className="mt-6 w-full py-3 bg-[#1A1A1A] text-white text-xs 
+                    className="mt-6 w-full py-3 border border-black text-black text-xs 
                                font-mono uppercase tracking-[0.2em]
-                               transition-all duration-300 hover:bg-[#333]"
+                               transition-all duration-300 hover:bg-black hover:text-white"
                   >
                     Explorar
                   </button>

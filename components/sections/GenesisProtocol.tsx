@@ -1,6 +1,6 @@
 "use client";
 
-import { KineticHeading } from "@/components/ui/KineticHeading";
+import { KineticHeading } from "@/components/ui/KineticHeadingNew";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useEffect, useRef, useState } from "react";
@@ -162,18 +162,9 @@ export default function GenesisProtocol() {
     <section
       ref={sectionRef}
       id="genesis-protocol"
-      className="relative min-h-screen bg-[#FAFAFA]"
+      className="relative min-h-screen bg-transparent"
       aria-label="Genesis Protocol - Metodologia"
     >
-      {/* Warm overlay for atmosphere transition */}
-      <div
-        className="absolute inset-0 pointer-events-none opacity-20"
-        style={{
-          background:
-            "linear-gradient(135deg, transparent 0%, rgba(201, 162, 39, 0.1) 100%)",
-        }}
-      />
-
       <div className="relative max-w-[1800px] mx-auto px-6 md:px-12 py-24 md:py-32">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-24 items-start">
           {/* Left: Header (sticky on desktop) */}
@@ -263,7 +254,7 @@ export default function GenesisProtocol() {
                   />
 
                   {/* Phase Content */}
-                  <div className="bg-white border border-[#E5E5E5] p-8 md:p-10">
+                  <div className="bg-transparent border border-black/5 p-8 md:p-10">
                     {/* Header */}
                     <div className="flex items-start justify-between gap-6">
                       <div>

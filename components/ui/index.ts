@@ -1,4 +1,4 @@
-export { KineticHeading } from "@/components/ui/KineticHeading";
+export { KineticHeading } from "@/components/ui/KineticHeadingNew";
 export { GridBackground } from "@/components/ui/GridBackground";
 export { TextMask } from "@/components/ui/TextMask";
 export { TechnicalLabel } from "@/components/ui/TechnicalLabel";
