@@ -1,10 +1,10 @@
 "use client";
 
-import React, { useMemo, useRef } from "react";
 import { useInView } from "framer-motion";
+import { useMemo, useRef } from "react";
 
-import { cn } from "@/lib/utils";
 import { useScrambleText } from "@/hooks/useScrambleText";
+import { cn } from "@/lib/utils";
 
 interface KineticHeadingProps {
   title: string;
@@ -41,14 +41,21 @@ export function KineticHeading({
     active: inView,
   });
 
-  const showCursor = useMemo(() => inView && scrambled !== title, [inView, scrambled, title]);
+  const showCursor = useMemo(
+    () => inView && scrambled !== title,
+    [inView, scrambled, title],
+  );
 
   return (
     <div
       ref={ref}
       className={cn(
         "w-full",
-        align === "center" ? "text-center" : align === "right" ? "text-right" : "text-left",
+        align === "center"
+          ? "text-center"
+          : align === "right"
+            ? "text-right"
+            : "text-left",
         className,
       )}
     >
@@ -56,7 +63,11 @@ export function KineticHeading({
         <div
           className={cn(
             "mb-4",
-            align === "center" ? "flex justify-center" : align === "right" ? "flex justify-end" : "flex justify-start",
+            align === "center"
+              ? "flex justify-center"
+              : align === "right"
+                ? "flex justify-end"
+                : "flex justify-start",
           )}
         >
           <span
@@ -81,7 +92,11 @@ export function KineticHeading({
           SIZE_CLASS[size],
         )}
         aria-label={title}
-        style={textureUrl ? { backgroundImage: `url("${textureUrl.replaceAll('"', "%22")}")` } : undefined}
+        style={
+          textureUrl
+            ? { backgroundImage: `url("${textureUrl.replaceAll('"', "%22")}")` }
+            : undefined
+        }
       >
         <span className="tabular-nums">{scrambled}</span>
         {showCursor && (

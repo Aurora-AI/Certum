@@ -1,8 +1,8 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useEffect, useMemo, useRef, useState } from "react";
 
 import { ConnectionLine } from "@/components/ui/ConnectionLine";
 import { KineticHeading } from "@/components/ui/KineticHeadingNew";
@@ -43,11 +43,9 @@ const PILLARS: Array<{
 
 export default function HallOfClarity() {
   const sectionRef = useRef<HTMLElement>(null);
-  const [activeTickers, setActiveTickers] = useState<[boolean, boolean, boolean]>([
-    false,
-    false,
-    false,
-  ]);
+  const [activeTickers, setActiveTickers] = useState<
+    [boolean, boolean, boolean]
+  >([false, false, false]);
 
   const tickerActives = useMemo(
     () => PILLARS.map((_, idx) => activeTickers[idx] ?? false),
@@ -60,8 +58,12 @@ export default function HallOfClarity() {
     const section = sectionRef.current;
     if (!section) return;
 
-    const cards = Array.from(section.querySelectorAll<HTMLElement>("[data-pillar-card]"));
-    const paths = Array.from(section.querySelectorAll<SVGPathElement>("[data-conn-path]"));
+    const cards = Array.from(
+      section.querySelectorAll<HTMLElement>("[data-pillar-card]"),
+    );
+    const paths = Array.from(
+      section.querySelectorAll<SVGPathElement>("[data-conn-path]"),
+    );
     const node = section.querySelector<HTMLElement>("[data-genesis-node]");
 
     gsap.set(cards, { transformOrigin: "50% 100%", scaleY: 0, opacity: 0 });
@@ -86,7 +88,11 @@ export default function HallOfClarity() {
     tl.call(() => setActiveTickers([true, true, false]), [], 0.2);
     tl.call(() => setActiveTickers([true, true, true]), [], 0.4);
 
-    tl.to(paths, { strokeDashoffset: 0, duration: 0.8, stagger: 0.08, ease: "power2.out" }, ">-0.15");
+    tl.to(
+      paths,
+      { strokeDashoffset: 0, duration: 0.8, stagger: 0.08, ease: "power2.out" },
+      ">-0.15",
+    );
     if (node) tl.to(node, { scale: 1, opacity: 1, duration: 0.45 }, ">-0.2");
 
     return () => {
@@ -96,7 +102,11 @@ export default function HallOfClarity() {
   }, []);
 
   return (
-    <section ref={sectionRef} className="relative bg-transparent py-24 md:py-28" aria-label="Hall of Clarity">
+    <section
+      ref={sectionRef}
+      className="relative bg-transparent py-24 md:py-28"
+      aria-label="Hall of Clarity"
+    >
       <div className="max-w-[1800px] mx-auto px-6 md:px-12">
         <div className="max-w-4xl mx-auto">
           <KineticHeading
@@ -107,8 +117,9 @@ export default function HallOfClarity() {
             size="7xl"
           />
           <p className="mt-7 text-center text-[#8A8A8A] leading-relaxed">
-            Consórcio, seguros e advisory tratados como protocolos de engenharia patrimonial — rigor técnico,
-            execução elegante e lastro em ativos reais.
+            Consórcio, seguros e advisory tratados como protocolos de engenharia
+            patrimonial — rigor técnico, execução elegante e lastro em ativos
+            reais.
           </p>
         </div>
 
@@ -164,4 +175,3 @@ export default function HallOfClarity() {
     </section>
   );
 }
-
