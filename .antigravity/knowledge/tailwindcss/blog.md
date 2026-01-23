@@ -1,0 +1,3 @@
+# https://tailwindcss.com/blog
+
+There are a lot of UI blocks in Tailwind Plus that need JavaScript to really be useful, like dialogs, dropdowns, command palettes, and more. And unless you're a React or Vue user, using those UI blocks has always meant writing all of that tricky JavaScript yourself. Well today that finally changes — every UI block in Tailwind Plus is now fully functional, accessible, and interactive, including the plain HTML examples.

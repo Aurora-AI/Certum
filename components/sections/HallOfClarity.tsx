@@ -5,7 +5,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useEffect, useMemo, useRef, useState } from "react";
 
 import { ConnectionLine } from "@/components/ui/ConnectionLine";
-import { KineticHeading } from "@/components/ui/KineticHeadingNew";
+import { KineticHeading } from "@/components/ui/KineticHeading";
 import { NumberTicker } from "@/components/ui/NumberTicker";
 import { PillarCard } from "@/components/ui/PillarCard";
 
@@ -22,22 +22,22 @@ const PILLARS: Array<{
   metric: PillarMetric;
 }> = [
   {
-    eyebrow: "// PILLAR_01",
-    title: "CONSÓRCIO",
-    subtitle: "Alavancagem Pura",
-    metric: { value: 8.2, suffix: "Bi", tail: "em cartas ativas" },
+    eyebrow: "// METHOD_01",
+    title: "ALAVANCAGEM",
+    subtitle: "Custo de Capital Otimizado",
+    metric: { value: 32.4, suffix: "%", tail: "economia média" },
   },
   {
-    eyebrow: "// PILLAR_02",
-    title: "SEGUROS",
-    subtitle: "Iron Shield",
-    metric: { value: 4.1, suffix: "Bi", tail: "em cobertura" },
+    eyebrow: "// METHOD_02",
+    title: "ARBITRAGEM",
+    subtitle: "Cash Value Brasileiro",
+    metric: { value: 17.8, suffix: "Bi", tail: "volume de negócios" },
   },
   {
-    eyebrow: "// PILLAR_03",
-    title: "WEALTH",
-    subtitle: "Arquitetura",
-    metric: { value: 1.9, suffix: "Bi", tail: "sob advisory" },
+    eyebrow: "// METHOD_03",
+    title: "PROTEÇÃO",
+    subtitle: "Estrutura AA+ Fitch",
+    metric: { value: 355, suffix: "M", tail: "aumento de capital" },
   },
 ];
 
@@ -161,12 +161,12 @@ export default function HallOfClarity() {
         <div className="mt-6 md:mt-2 flex items-center justify-center">
           <div
             data-genesis-node
-            className="px-6 py-4 rounded bg-white/60 backdrop-blur-sm border border-black/5 shadow-[0_20px_60px_rgba(0,0,0,0.06)]"
+            className="px-8 py-5 bg-white border border-black/5 transition-all duration-500 hover:border-black/10"
           >
-            <div className="font-mono text-[10px] uppercase tracking-[0.35em] text-black/45 text-center">
+            <div className="font-mono text-[10px] uppercase tracking-[0.25em] text-black/40 text-center">
               GENESIS PROTOCOL
             </div>
-            <div className="mt-2 font-serif text-xl text-[#1A1A1A] text-center">
+            <div className="mt-3 font-sans text-xl font-medium text-[#1A1A1A] text-center tracking-tight">
               Conectar. Estruturar. Executar.
             </div>
           </div>

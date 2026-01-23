@@ -218,11 +218,12 @@ export default function SystemProof() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
           {/* Large Card: TVL */}
           <DataCard
-            label="Total Value Locked"
+            label="Volume de Negócios"
             prefix="R$"
-            value={14.2}
+            value={17.8}
             suffix="Bi"
             decimals={1}
+            trend={11.0}
             size="large"
             sparkData={TVL_SPARK}
             active={tickersActive}
@@ -230,57 +231,81 @@ export default function SystemProof() {
 
           {/* Medium Card: Yield */}
           <DataCard
-            label="Yield Médio"
-            value={18.4}
+            label="Economia Real"
+            value={32.4}
             suffix="%"
             decimals={1}
-            trend={2.3}
+            trend={4.5}
             size="medium"
             active={tickersActive}
           />
 
           {/* Small Cards Row */}
           <DataCard
-            label="Cartas Ativas"
-            value={127.4}
-            suffix="K"
-            decimals={1}
+            label="Rating Fitch"
+            prefix="AA+"
+            value={0}
+            suffix="(bra)"
+            decimals={0}
             size="small"
             active={tickersActive}
           />
 
           <DataCard
-            label="Contemplações/Mês"
-            value={2847}
+            label="Market Share"
+            value={3.0}
+            suffix="%"
             size="small"
             active={tickersActive}
           />
 
           <DataCard
-            label="Tempo Médio"
-            value={38}
-            suffix=" meses"
+            label="Ativos Geridos"
+            prefix="R$"
+            value={15.8}
+            suffix="Bi"
             size="small"
             active={tickersActive}
           />
 
           {/* Quote Card - Full Width */}
-          <QuoteCard />
+          <div
+            data-data-card
+            className="col-span-1 md:col-span-3 bg-transparent border border-black/5 p-8 md:p-12"
+          >
+            <blockquote className="relative">
+              <span className="absolute -top-4 -left-2 text-6xl text-black/10 font-serif">
+                "
+              </span>
+              <p className="text-xl md:text-2xl text-[#1A1A1A] leading-relaxed font-medium pl-8">
+                A única do setor com Rating Público AA+ Fitch. Mais de R$ 17
+                Bilhões em negócios gerados em 2024. Isso não é sorte. É solidez
+                de balanço e governança corporativa de nível global.
+              </p>
+              <footer className="mt-6 pl-8">
+                <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-[#8A8A8A]">
+                  — RELATÓRIO DE INVESTIDORES 2026
+                </span>
+              </footer>
+            </blockquote>
+          </div>
         </div>
 
         {/* Trust Badges */}
         <div className="mt-16 flex flex-wrap items-center justify-center gap-8 md:gap-12">
-          {["BACEN", "SUSEP", "CVM", "B3"].map((badge) => (
-            <div
-              key={badge}
-              className="flex items-center gap-2 opacity-40 hover:opacity-100 transition-opacity"
-            >
-              <div className="w-2 h-2 bg-[#00C853] rounded-full" />
-              <span className="font-mono text-xs uppercase tracking-[0.2em] text-[#8A8A8A]">
-                Regulado {badge}
-              </span>
-            </div>
-          ))}
+          {["FITCH AA+", "B3 LISTED", "BACEN REGULATED", "SUSEP"].map(
+            (badge) => (
+              <div
+                key={badge}
+                className="flex items-center gap-2 opacity-40 hover:opacity-100 transition-opacity"
+              >
+                <div className="w-2 h-2 bg-[#00C853] rounded-full" />
+                <span className="font-mono text-xs uppercase tracking-[0.2em] text-[#8A8A8A]">
+                  {badge}
+                </span>
+              </div>
+            ),
+          )}
         </div>
       </div>
     </section>

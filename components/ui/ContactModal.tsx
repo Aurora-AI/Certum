@@ -64,8 +64,7 @@ export default function ContactModal({ isOpen, onClose }: ContactModalProps) {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    // Aqui você pode integrar com um serviço de email (Sendgrid, Mailgun, etc)
-    console.log("Formulário enviado:", formData);
+    // TODO: Integrar com serviço de email (Sendgrid, Mailgun, Resend, etc)
 
     // Simular envio
     setSubmitted(true);

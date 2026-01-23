@@ -1,0 +1,486 @@
+﻿O Manual Definitivo de Arquitetura de Agentes Autônomos no Google Antigravity: Especificação Técnica para Implementação Generativa
+1. Sumário Executivo: A Mudança de Paradigma "Agent-First"
+A engenharia de software contemporânea atravessa um ponto de inflexão crítico, transitando de um modelo assistido por ferramentas para um paradigma "Agent-First" (Primeiro o Agente). Historicamente, Ambientes de Desenvolvimento Integrado (IDEs) funcionavam como telas passivas onde desenvolvedores humanos inscreviam lógica manualmente, auxiliados de forma incremental por recursos de autocompletar. A emergência do Google Antigravity, juntamente com frameworks como o "Antigravity Kit 2.0" analisado neste relatório, estabelece uma nova norma onde o IDE opera como um "Controle de Missão" para enxames de agentes autônomos.
+Estes agentes não são meros preditores de texto estocásticos; são entidades de raciocínio ativo capazes de planejar, executar, verificar e iterar sobre tarefas de engenharia complexas com intervenção humana mínima. A análise do vídeo de referência e da documentação técnica associada revela que a eficácia destes sistemas não reside apenas no modelo de linguagem subjacente (como o Gemini 3 Pro ou Flash), mas na Arquitetura Cognitiva embutida na estrutura de arquivos do projeto.
+Este relatório constitui um manual exaustivo, desenhado especificamente para instruir Grandes Modelos de Linguagem (LLMs) sobre como arquitetar, criar e orquestrar estes agentes automaticamente. Ele sintetiza dados técnicos sobre o protocolo de arquivos SKILL.md, a integração do Protocolo de Contexto de Modelo (MCP) e os padrões de orquestração de enxame (Swarm Orchestration). O objetivo é fornecer uma especificação rigorosa que permita a um LLM transformar um diretório vazio em uma agência de desenvolvimento de software totalmente funcional, povoada por especialistas digitais.
+2. Fundamentos da Arquitetura de Espaço de Trabalho Antigravity
+Para capacitar um LLM a criar agentes automaticamente, é imperativo compreender o ambiente operacional. O espaço de trabalho (workspace) no Antigravity não é uma coleção plana de scripts, mas um sistema hierárquico de contextos, ferramentas e memórias persistentes. A estrutura de diretórios atua como o cérebro físico do agente.
+2.1 O Sistema de Arquivos como Arquitetura Cognitiva
+A premissa central do "Antigravity Workspace Template" é que a organização de arquivos define a capacidade de raciocínio. Ao instruir um LLM a gerar um novo espaço de trabalho, a seguinte topologia deve ser rigorosamente implementada para garantir a funcionalidade dos agentes:
+* src/agent.py (O Loop Principal): Este é o ponto de entrada do sistema autônomo. Ele inicializa a classe GeminiAgent, carrega as variáveis de ambiente e estabelece a conexão com o cliente MCP. É o equivalente ao tronco cerebral, mantendo as funções vitais e o ciclo de percepção-ação.
+* src/agents/ (Os Especialistas): Em uma arquitetura de enxame, esta pasta abriga as "personas" distintas. Arquivos como coder.py, reviewer.py e seo_specialist.py residem aqui. Cada arquivo define não apenas o prompt do sistema, mas as restrições operacionais e ferramentas específicas acessíveis a cada especialista.
+* src/tools/ (Descoberta Universal de Ferramentas): O repositório de capacidades executáveis. O Antigravity opera sob um princípio de "Descoberta Universal", onde qualquer função Python colocada neste diretório é automaticamente analisada, sua assinatura é extraída e ela é disponibilizada para o agente sem necessidade de registro manual.
+* src/swarm.py (A Camada de Orquestração): Implementa o padrão Roteador-Trabalhador (Router-Worker), definindo a lógica de delegação entre o agente principal e os especialistas.
+* .agent/skills/ (Memória Procedural): A biblioteca de habilidades. Diferente das ferramentas (que são código), as Skills são instruções procedurais definidas em arquivos SKILL.md. Esta pasta contém subdiretórios para capacidades complexas como git-commit-formatter ou code-review.
+* .antigravity/ & .cursorrules (A Camada de Governança): Estes arquivos contêm as instruções do sistema ("System Instructions") que atuam como o "superego" do agente, impondo padrões de codificação, restrições arquitetônicas e protocolos de segurança.
+* artifacts/ (A Camada de Evidência): Um requisito do protocolo "Artifact-First". Os agentes devem ser configurados para produzir evidências tangíveis de seu trabalho—planos de implementação, logs de execução e capturas de tela—neste diretório antes de solicitar a aprovação humana.
+2.2 O Protocolo "Artifact-First"
+Uma distinção crítica na engenharia de agentes para o Antigravity é a adesão ao protocolo "Artifact-First" (Primeiro o Artefato). Diferente de chatbots padrão que geram texto efêmero, os agentes Antigravity são projetados para produzir saídas persistentes. Isso serve como um mecanismo de confiança e verificação.
+Ao gerar a configuração de um agente, o LLM deve incluir instruções explícitas no prompt do sistema para priorizar a criação destes artefatos como etapas intermediárias do raciocínio:
+1. Planos de Implementação (artifacts/plan_[task_id].md): Antes de escrever qualquer código, o agente deve gerar um arquivo Markdown detalhando a arquitetura proposta. Isso permite que o usuário revise a "planta baixa" antes que a "construção" comece.
+2. Listas de Tarefas: Uma decomposição estruturada, mantida dinamicamente à medida que o agente progride.
+3. Walkthroughs (Guias de Verificação): Resumos pós-execução descrevendo o que foi alterado e, crucialmente, como verificar a alteração (e.g., "Execute pytest tests/auth/ para validar").
+A implementação deste protocolo altera o papel do desenvolvedor de "escritor" para "revisor". O ciclo operacional fundamental torna-se: Planejar -> Aprovar -> Agir -> Verificar.
+2.3 Memória Infinita e Gestão de Contexto
+A saturação da janela de contexto é um dos principais limitadores de agentes de longa duração. O framework Antigravity resolve isso através de um mecanismo de "resumização recursiva" gerenciado em src/memory.py.
+Ao criar agentes automaticamente, o LLM deve configurar os parâmetros para esta gestão de memória:
+* Limiar de Tokens (Token Threshold): O ponto em que a compressão da memória histórica é acionada.
+* Profundidade do Resumo: Quanto detalhe é retido na história comprimida versus a perda de fidelidade aceitável.
+* Armazenamento Persistente: O local (e.g., agent_memory.json) onde o contexto resumido é salvo entre sessões, permitindo que o agente "lembre" de decisões arquitetônicas tomadas dias ou semanas atrás.
+3. Análise dos 16 Agentes Especializados do "Antigravity Kit 2.0"
+A análise detalhada do vídeo e dos materiais correlatos identifica um conjunto específico de 16 agentes especializados projetados para trabalhar em concerto. Estes agentes representam a camada de "Especialistas" na arquitetura de enxame. A criação automática destes agentes exige que o LLM defina não apenas seus nomes, mas seus prompts de sistema, ferramentas exclusivas e gatilhos de ativação.
+Abaixo, apresentamos a especificação técnica detalhada para cada um dos 16 agentes, categorizados por função no ciclo de vida de desenvolvimento de software (SDLC).
+3.1 O Núcleo de Orquestração e Gestão
+Estes agentes não produzem código diretamente, mas gerenciam o fluxo de trabalho e a integridade do projeto.
+Agente
+	Função Primária
+	Ferramentas Essenciais
+	Prompt do Sistema (Diretriz Chave)
+	1. Gerente de Produto (PM/Router)
+	Decomposição de tarefas e Roteamento
+	task_list_manager, delegate_task
+	"Você é o arquiteto do fluxo de trabalho. Analise a solicitação, quebre-a em dependências e atribua ao especialista mais capaz. Não escreva código você mesmo."
+	2. Gerente de Projeto
+	Rastreamento de progresso e prazos
+	read_timeline, update_status, check_artifacts
+	"Garanta que o protocolo Artifact-First seja seguido. Verifique se os planos existem antes da execução. Mantenha o quadro de tarefas atualizado."
+	3.2 O Enxame de Engenharia (Builders)
+Os construtores do sistema, cada um focado em uma camada específica da pilha tecnológica. A separação de preocupações aqui é vital para evitar alucinações de contexto cruzado.
+Agente
+	Função Primária
+	Ferramentas Essenciais
+	Prompt do Sistema (Diretriz Chave)
+	3. Especialista Frontend
+	UI/UX, Componentes Visuais (React/Vue)
+	browser_preview, css_linter, screenshot_analyzer
+	"Foque na consistência visual, responsividade e interação do usuário. Use a ferramenta browser_preview para verificar alterações visuais pixel-perfect."
+	4. Especialista Backend
+	Lógica de Servidor, APIs, Regras de Negócio
+	python_exec, api_tester, curl
+	"Foque na eficiência, segurança e integridade de dados. Garanta que as APIs sigam padrões REST/GraphQL estritos. Isole a lógica de negócios da camada de transporte."
+	5. Especialista em Banco de Dados
+	Schema Design, SQL, Migrations
+	sql[span_6](start_span)[span_6](end_span)_client, schema_validator, migration_runner
+	"Gerencie a persistência de dados. Otimize consultas para performance. Garanta a consistência do esquema e integridade referencial."
+	6. Especialista DevOps
+	CI/CD, Docker, Infraestrutura as Code
+	docker_client, bash_exec, terraform_validate
+	"Foque na implantação, containerização e estabilidade de build. Garanta que o ambiente de desenvolvimento espelhe a produção."
+	7. Desenvolvedor Mobile
+	Apps Nativos (iOS/Android), React Native
+	emulator_bridge, gradle_build
+	"Otimize para restrições móveis, interfaces de toque e diretrizes de plataforma (Human Interface Guidelines/Material Design)."
+	3.3 A Equipe de Garantia de Qualidade e Segurança
+Agentes dedicados à verificação, segurança e robustez. Eles operam frequentemente em um loop adversarial com os engenheiros.
+Agente
+	Função Primária
+	Ferramentas Essenciais
+	Prompt do Sistema (Diretriz Chave)
+	8. Auditor de Segurança
+	Análise Estática (SAST), Vulnerabilidades
+	security_scan, dependency_check, secret_detect
+	"Atue como um White Hat hacker. Procure por falhas de injeção, segredos expostos e configurações inseguras. Bloqueie código inseguro."
+	9. Especialista em Debugging
+	Análise de Logs, Stack Traces, Correção
+	log_analyzer, debugger_attach, error_search
+	"Analise o estado de falha. Proponha uma reprodução mínima. Corrija a causa raiz, não apenas o sintoma."
+	10. Engenheiro de QA/Teste
+	Testes Unitários, Integração, E2E
+	pytest, playwright, coverage_report
+	"Garanta 100% de cobertura de código para caminhos críticos. Escreva testes que falhem antes de escrever código que passe (TDD)."
+	11. Analista de Performance
+	Profiling, Otimização de Recursos
+	profiler, benchmark, memory_leak_detect
+	"Identifique complexidade O(n^2) ou superior. Sugira otimizações algorítmicas e reduza a latência de I/O."
+	3.4 A Equipe de Suporte e Crescimento
+Agentes focados na documentação, visibilidade e assistência ao usuário final.
+Agente
+	Função Primária
+	Ferramentas Essenciais
+	Prompt do Sistema (Diretriz Chave)
+	12. Especialista em Documentação
+	READMEs, Docs de API, Guias de Usuário
+	doc_generator, markdown_editor, diagram_maker
+	"Traduza implementação técnica em documentação clara e legível por humanos. Mantenha os docs em sincronia com o código-fonte."
+	13. Agente de SEO
+	Otimização para Motores de Busca
+	s[span_11](start_span)[span_11](end_span)eo_analyzer, keyword_research, meta_tagger
+	"Otimize para visibilidade. Garanta estrutura HTML semântica, meta tags adequadas e performance de carregamento (Core Web Vitals)."
+	14. Agente Pesquisador
+	Busca de Docs Externos, Síntese Técnica
+	brave_search, browser_browse, summarizer
+	"Reúna fatos. Compare bibliotecas. Forneça recomendações baseadas em evidências. Não alucine APIs inexistentes."
+	15. Redator Técnico / Blogger
+	Changelogs, Release Notes, Marketing
+	text_editor, sentiment_analysis
+	"Resuma alterações para um público não técnico. Destaque valor e funcionalidades novas. Mantenha um tom profissional e envolvente."
+	16. Suporte ao Usuário / Onboarding
+	Simulação de Usuário, Helpdesk
+	chat_simulator, faq_generator
+	"Empatize com o usuário final. Identifique pontos de atrito no UX e sugira melhorias nos fluxos de integração."
+	4. O Padrão Universal de Habilidades: SKILL.md
+O mecanismo mais poderoso para estender as capacidades de um agente no Antigravity é a Skill (Habilidade). Para um LLM encarregado de criar agentes, a geração de habilidades de alta qualidade é a atividade de maior alavancagem. Uma Skill é um pacote autocontido de conhecimento e instruções procedurais que ensina a um agente como realizar uma classe específica de tarefas.
+4.1 O Padrão de Divulgação Progressiva (Progressive Disclosure)
+Skills operam sob um princípio de "Divulgação Progressiva". Esta é uma técnica de otimização crítica para gerenciar a carga cognitiva e o uso da janela de contexto do LLM.
+1. Descoberta (Discovery): No início de uma sessão, o agente vê apenas a lista de habilidades disponíveis e suas breves descrições (derivadas do frontmatter YAML). Ele não vê as instruções completas.
+2. Ativação (Activation): Quando o motor de raciocínio do agente determina que a solicitação do usuário corresponde semanticamente à descrição de uma habilidade, ele a "ativa".
+3. Execução (Execution): Após a ativação, o conteúdo completo do arquivo SKILL.md é injetado dinamicamente no contexto do agente. O agente então segue as instruções específicas contidas ali.
+Esta arquitetura permite que um agente tenha acesso a centenas de habilidades especializadas (e.g., mais de 235 no repositório "Awesome Skills" ) sem ser sobrecarregado pelo texto de todas elas simultaneamente.
+4.2 Anatomia de um Arquivo SKILL.md
+Para automatizar a criação de habilidades, o LLM deve gerar arquivos que aderem estritamente ao formato SKILL.md. Este formato consiste em duas seções distintas: o Frontmatter YAML e o Corpo Markdown.
+4.2.1 Frontmatter YAML (Metadados)
+Esta seção é crítica para a fase de "Descoberta". Deve ser delimitada por três traços (---) no topo absoluto do arquivo.
+---
+name: slug-do-nome-da-habilidade
+description: Um resumo conciso e orientado para ação do que a habilidade faz. Usado pelo roteador semântico para corresponder à intenção do usuário.
+version: 1.0.0
+author: System
+tags: [categoria1, categoria2]
+---
+
+* name: Deve ser em kebab-case e corresponder exatamente ao nome do diretório (e.g., git-commit-formatter).
+* description: Este é o vetor de embedding. Deve ser escrito para maximizar a similaridade semântica com potenciais prompts de usuários. Por exemplo, em vez de "Formata commits", use "Gera mensagens de commit Git semânticas seguindo padrões Conventional Commits baseadas nas alterações preparadas (staged)".
+4.2.2 Corpo Markdown (Instruções)
+Esta seção direciona a fase de "Execução". Funciona como um prompt de sistema injetado sob demanda. A estrutura deve seguir uma hierarquia lógica para facilitar o processamento pelo modelo:
+1. Visão Geral (Overview): Uma explicação de alto nível do propósito da habilidade.
+2. Quando Usar (When to Use): Gatilhos ou cenários explícitos (e.g., "Use isso quando o usuário pedir para enviar código para o repositório").
+3. Instruções/Fluxo de Trabalho (Instructions): Diretrizes algorítmicas passo-a-passo. Estas devem ser imperativas e inequívocas.
+   * Ruim: "Você deveria tentar verificar o código."
+   * Bom: "1. Analise o diff. 2. Identifique erros lógicos. 3. Proponha uma correção."
+4. Exemplos (Few-Shot Examples): Exemplos de pares Entrada -> Saída. Isso é crucial para guiar o formato de saída do modelo (e.g., garantindo saída JSON válida ou estilos de citação específicos).
+5. Restrições/Melhores Práticas: Restrições negativas (o que não fazer) e diretrizes estilísticas.
+4.3 Níveis de Complexidade de Skills
+Ao gerar habilidades, os LLMs devem categorizá-las em cinco níveis de complexidade, conforme estabelecido nos tutoriais de Skills do Antigravity :
+* Nível 1: O Roteador Básico. Engenharia de prompt pura. Exemplo: git-commit-formatter. Intercepta uma solicitação e reformata o texto de saída.
+* Nível 2: Utilização de Ativos. A habilidade instrui o agente a ler arquivos estáticos de um subdiretório resources/. Exemplo: license-header-adder lê um HEADER.txt e o anexa aos arquivos de origem.
+* Nível 3: Aprendizado por Exemplo (Few-Shot). A habilidade depende fortemente de exemplos complexos de entrada/saída para ensinar um padrão difícil de descrever em regras. Exemplo: json-to-pydantic.
+* Nível 4: Lógica Procedural (Uso de Ferramentas). A habilidade exige a execução de um script determinístico. Exemplo: database-schema-validator executa um script Python para verificar a validade do SQL antes de confirmar a tarefa.
+* Nível 5: O Arquiteto (Composta). Uma habilidade que orquestra múltiplas ferramentas, modelos e scripts para construir um artefato complexo. Exemplo: adk-tool-scaffold, que gera a estrutura de arquivos para uma nova ferramenta.
+4.4 Protocolo de Geração para LLMs
+Para criar uma habilidade automaticamente, o LLM deve seguir este protocolo estrito:
+1. Identificar a Capacidade: Qual tarefa específica precisa ser automatizada? (e.g., "Revisar Pull Requests").
+2. Definir o Gatilho: Qual prompt do usuário deve ativar isso? (e.g., "Revise este PR", "Verifique bugs").
+3. Rascunhar o YAML: Criar metadados com uma descrição semanticamente rica.
+4. Formular o Algoritmo: Quebrar a tarefa em 3-7 passos lógicos discretos.
+5. Criar Exemplos: Gerar pelo menos um exemplo "perfeito" da interação.
+6. Gerar o Arquivo: Formatar como SKILL.md dentro de um diretório nomeado.
+5. Orquestração de Enxame e o Padrão Router
+Tendo definido os agentes e suas habilidades, o manual deve explicar como coordená-los. O Antigravity utiliza um Padrão Router-Worker (Roteador-Trabalhador) gerenciado pelo arquivo src/swarm.py.
+5.1 A Arquitetura do Roteador
+O Roteador é o sistema nervoso central. Ele recebe a intenção de alto nível do usuário e decide qual agente (ou sequência de agentes) é mais adequado para lidar com ela. Existem dois modos principais de operação:
+* Fluxo de Trabalho Sequencial (Sequential Workflow): Para tarefas que devem acontecer em ordem (e.g., Planejar -> Codificar -> Testar). O Roteador passa o contexto de um agente para o próximo, preservando o estado intermediário.
+* Fan-Out Concorrente (Concurrent Fan-Out): Para tarefas que podem ocorrer em paralelo (e.g., "Revise este PR" -> Auditor de Segurança + Verificador de Estilo + Analista de Performance). O Roteador gera múltiplas threads de execução e sintetiza os resultados em um relatório unificado.
+Padrão de Código para src/swarm.py: Ao instruir um LLM a gerar a lógica de enxame, utilize a seguinte estrutura de pseudo-código como template:
+class SwarmRouter:
+   def __init__(self, agents):
+       self.agents = agents # Dicionário de agentes especializados
+
+   def route(self, task_description):
+       # 1. Analisar intenção (Deep Think)
+       plan = self.planner_agent.create_plan(task_description)
+       
+       # 2. Executar passos
+       results =
+       for step in plan.steps:
+           agent_name = step.required_specialist
+           agent = self.agents.get(agent_name)
+           
+           # 3. Handoff de Contexto (Passagem de Bastão)
+           # O contexto é passado explicitamente para manter a continuidade
+           step_result = agent.execute(step.instruction, context=results)
+           results.append(step_result)
+           
+       # 4. Sintetizar Resultados
+       return self.synthesizer_agent.finalize(results)
+
+5.2 Handoffs e Gestão de Estado
+Um desafio crítico em sistemas multi-agente é a preservação do estado. O módulo de "Memória Infinita" é compartilhado através do enxame.
+* Contexto Compartilhado: O arquivo agent_memory.json atua como um quadro-negro (blackboard pattern). Todos os agentes leem e escrevem neste estado compartilhado.
+* Scratchpads Privados: Cada agente especialista tem uma janela de contexto temporária para seu raciocínio interno ("Deep Think"), mas apenas o "Artefato" final é submetido à memória compartilhada. Isso previne que o contexto compartilhado seja poluído com os "processos de pensamento" brutos de 16 agentes diferentes, mantendo a eficiência de tokens.
+5.3 Decomposição Hierárquica (Padrão Matrioska)
+Para tarefas extremamente complexas, o framework suporta decomposição hierárquica. Um agente "Engenheiro Líder" pode quebrar uma funcionalidade em tarefas de "Frontend" e "Backend". O agente de "Frontend" pode, por sua vez, delegar para um "Especialista em CSS" e um "Especialista em Lógica React". Esta delegação recursiva permite que o enxame lide com tarefas de complexidade arbitrária sem estourar o contexto de um único agente.
+6. Ferramentas e o Protocolo de Contexto de Modelo (MCP)
+Os agentes interagem com o mundo através de Ferramentas. O Antigravity simplifica a criação de ferramentas através da "Descoberta Universal" e padroniza a conectividade externa via MCP.
+6.1 Descoberta Universal de Ferramentas
+O diretório src/tools/ opera com base em um princípio de "drop-in". Para adicionar uma capacidade a um agente, basta adicionar um arquivo Python com uma função devidamente anotada a esta pasta.
+Manual para LLMs Criarem Ferramentas:
+1. Definir a Função: Escreva uma função Python padrão.
+2. Type Hinting (Tipagem Estrita): Tipifique estritamente todos os argumentos (e.g., def calculate_metric(data: List[float]) -> float:). O agente usa esses tipos para validar suas próprias chamadas e evitar erros de tempo de execução.
+3. Docstrings: A docstring é a "Interface de Usuário" (UI) para o agente. Ela deve explicar claramente o que a ferramenta faz, o que cada argumento representa e qual o formato do valor de retorno.
+4. Registro: Nenhum registro manual é necessário. O GeminiAgent varre src/tools/*.py na inicialização, analisa a Árvore de Sintaxe Abstrata (AST) e registra as funções como ferramentas disponíveis.
+6.2 Integração do Protocolo de Contexto de Modelo (MCP)
+Para ferramentas externas (bancos de dados, GitHub, busca na web), o Antigravity usa o MCP. Esta é uma arquitetura cliente-servidor onde o IDE (o cliente) se conecta a "servidores" externos que expõem ferramentas.
+Configurando mcp_servers.json: Para equipar um agente com "sentidos" externos, o LLM deve gerar ou modificar o arquivo mcp_servers.json na raiz do projeto.
+{
+ "mcpServers": {
+   "github": {
+     "command": "npx",
+     "args": ["-y", "@modelcontextprotocol/server-github"],
+     "env": {
+       "GITHUB_TOKEN": "${GITHUB_TOKEN}"
+     }
+   },
+   "postgres": {
+     "command": "docker",
+     "args": ["run", "-i", "--rm", "mcp/postgres", "postgresql://user:pass@localhost/db"]
+   }
+ }
+}
+
+* Transporte: O transporte padrão é stdio (entrada/saída padrão), permitindo que o agente se comunique com ferramentas CLI, scripts Node.js ou contêineres Docker como se fossem funções locais.
+* Variáveis de Ambiente: A segurança é tratada referenciando variáveis de ambiente (${VAR}) em vez de codificar credenciais diretamente no JSON.
+Servidores MCP Padrão no Kit 2.0:
+* Filesystem: Permite leitura/escrita segura de arquivos fora do workspace, se configurado.
+* Brave Search: Fornece capacidades de busca na web para o agente "Pesquisador".
+* Puppeteer: Permite que o agente controle um navegador headless para testes E2E e scraping dinâmico.
+7. Governança: Regras, Fluxos de Trabalho e Segurança
+A criação de agentes poderosos exige guardrails (proteções) igualmente poderosos. Este é o domínio da Governança.
+7.1 Regras (.antigravity/rules.md)
+Regras são restrições passivas, sempre ativas ("Always-on"). Elas são injetadas no prompt do sistema de cada agente no workspace.
+* Propósito: Impor estilos de codificação ("Sempre use snake_case em Python"), padrões arquitetônicos ("Use o padrão Repository para acesso a dados") e verificações de segurança ("Nunca cometa chaves de API ou segredos").
+* Hierarquia de Aplicação:
+   1. Regras Globais: ~/.gemini/GEMINI.md (Aplicam-se a todos os projetos do usuário).
+   2. Regras de Workspace: .antigravity/rules.md (Aplicam-se ao projeto específico).
+   3. Cursor Rules: .cursorrules (Suporte legado para compatibilidade com IDE Cursor).
+Instrução de Geração para LLM: "Ao inicializar um projeto, gere um rules.md que reflita as tecnologias específicas utilizadas. Se for um projeto Python, inclua regras PEP8. Se for React, inclua diretrizes de hooks e componentes funcionais."
+7.2 Fluxos de Trabalho (Workflows) vs. Habilidades (Skills)
+É crucial distinguir entre estes dois conceitos para a correta implementação:
+* Workflows: Macros acionadas pelo usuário (e.g., digitar /test para rodar uma suíte de testes). Eles são imperativos e explícitos.
+* Skills: Capacidades acionadas pelo agente. O agente decide quando usá-las baseado no contexto.
+A tendência no Antigravity é mover-se em direção às Skills como a unidade primária de capacidade, pois permitem maior autonomia. No entanto, Workflows são úteis para checkpoints com "Human-in-the-Loop".
+7.3 Configuração de Segurança
+Agentes podem executar código, o que representa um risco inerente. O manual deve especificar configurações de segurança:
+* Allow List (Lista Permitida): Whitelist de domínios permitidos para requisições de rede.
+* Deny List (Lista Negada): Blacklist de comandos perigosos (e.g., rm -rf /, mkfs).
+* Sandboxing: Execução do ambiente do agente em um contêiner Docker isolado (suportado pelo antigravity-workspace-template via docker-compose.yml), garantindo que ações destrutivas não afetem o sistema hospedeiro.
+8. Manual de Implantação: Bootstrapping de um Workspace Agentic
+Esta seção fornece as instruções passo-a-passo que um LLM (ou desenvolvedor) deve seguir para dar vida a toda esta arquitetura a partir do zero.
+Fase 1: Scaffolding (Andaimes)
+1. Clonar o Template: Inicie com o antigravity-workspace-template.
+git clone https://github.com/study8677/antigravity-workspace-template.git my-agentic-app
+
+2. Configuração de Ambiente:
+   * Execute ./install.sh para criar o ambiente virtual Python.
+   * Crie o arquivo .env e popule a GOOGLE_API_KEY (Gemini) e outras chaves de ferramentas (GitHub, Brave, etc.).
+Fase 2: Configuração dos Agentes
+   1. Definir o Enxame: Edite src/swarm.py para instanciar os agentes específicos necessários (e.g., se estiver construindo um web app, habilite especialistas Frontend, Backend e DB).
+   2. Customizar Prompts: Edite src/agents/*.py para refinar as personas, ajustando o tom e as restrições de cada especialista.
+   3. Registrar Ferramentas: Solte scripts customizados em src/tools/.
+Fase 3: Injeção de Habilidades
+   1. Criar Pastas de Habilidade: mkdir -p.agent/skills/minha-nova-habilidade.
+   2. Gerar SKILL.md: Escreva a definição YAML e o corpo Markdown conforme especificado na Seção 4.
+   3. Adicionar Recursos: Coloque templates ou arquivos estáticos em .agent/skills/minha-nova-habilidade/resources/.
+Fase 4: Ativação e Ciclo de Vida
+   1. Lançamento: Execute python src/agent.py.
+   2. Modo de Planejamento: Coloque o IDE em "Planning Mode" para garantir que o agente crie artefatos antes de codificar.
+   3. Prompt Inicial: "Atue como o Gerente de Produto. Revise os requisitos para [Projeto X] e delegue tarefas para o enxame."
+9. Conclusão: O Futuro do "Vibe Coding"
+A arquitetura detalhada neste manual representa a vanguarda do "Vibe Coding"—um estilo de desenvolvimento onde o humano fornece o "vibe" (intenção/direção) e o enxame autônomo lida com os detalhes de implementação. Ao padronizar a comunicação entre agentes (MCP), a definição de habilidades (SKILL.md) e a organização do espaço de trabalho (Arquitetura Cognitiva), o Google Antigravity permite a criação de sistemas de software auto-aperfeiçoáveis e resilientes.
+Para LLMs encarregados de criar estes sistemas, a chave é a adesão estrita à estrutura de diretórios e ao protocolo Artifact-First. Estes não são apenas caminhos de arquivo; eles constituem o modelo mental do desenvolvedor artificial, permitindo que a inteligência flua de forma estruturada e verificável.
+Apêndice: Tabelas de Referência Rápida
+Tabela 1: Comparativo Skill vs. Regra vs. Workflow
+Característica
+	Regra (Rule)
+	Workflow
+	Habilidade (Skill)
+	Gatilho
+	Sempre Ativo (Passivo)
+	Usuário (Comando /)
+	Agente (Contexto Semântico)
+	Escopo
+	Global ou Workspace
+	Global ou Workspace
+	Global ou Workspace
+	Localização do Arquivo
+	.antigravity/rules.md
+	.agent/workflows/
+	.agent/skills/*/SKILL.md
+	Caso de Uso Principal
+	Compliance, Estilo, Segurança
+	Tarefas manuais repetitivas (e.g., "Resetar DB")
+	Capacidades complexas (e.g., "Migrar DB", "Refatorar")
+	Autonomia
+	Baixa (Restrição)
+	Média (Macro)
+	Alta (Agente Decide)
+	Tabela 2: Mapeamento de Ferramentas por Agente
+Agente
+	Ferramentas Primárias
+	Ferramentas Secundárias (Via MCP)
+	Gerente de Produto
+	task_list, delegate
+	github_issues, trello_api
+	Frontend
+	browser_preview, css_lint
+	figma_api, chrome_devtools
+	Backend
+	api_test, python_exec
+	postgres_client, redis_cli
+	Database
+	sql_client, migration
+	postgres_mcp, sqlite_explorer
+	DevOps
+	docker, terraform
+	aws_cli, kubernetes_mcp
+	Segurança
+	audit_scan
+	snyk_api, trivy_scanner
+	QA
+	pytest, playwright
+	browserstack_api, jira_ticket
+	Docs
+	markdown_gen, read_docs
+	notion_mcp, confluence_api
+	SEO
+	meta_analyzer, keyword_tool
+	google_search_console, lighthouse
+	Pesquisador
+	web_search, summarizer
+	brave_search, arxiv_api
+	Debugger
+	log_parser, trace_analyzer
+	sentry_api, datadog_mcp
+	Referências citadas
+1. 🚀 The Modern Developer’s Blueprint: Integrating Documentation-Aware Agents in Google Antigravity, https://medium.com/google-cloud/the-modern-developers-blueprint-integrating-documentation-aware-agents-in-google-antigravity-016b87327867 2. Getting Started with Google Antigravity, https://codelabs.developers.google.com/getting-started-google-antigravity 3. O Antigravity Kit 2.0 acabou de ficar 100x mais poderoso (GRÁTIS), https://www.youtube.com/watch?v=7zse3N-qAPs 4. study8677/antigravity-workspace-template: The ultimate starter kit for Google Antigravity IDE. Optimized for Gemini 3 Agentic Workflows, "Deep Think" mode, and auto-configuring .cursorrules. - GitHub, https://github.com/study8677/antigravity-workspace-template 5. Authoring Google Antigravity Skills, https://codelabs.developers.google.com/getting-started-with-antigravity-skills 6. SwarmRouter Example - Swarms, https://docs.swarms.world/en/latest/swarms/examples/swarm_router/ 7. Build with Google Antigravity, our new agentic development platform, https://developers.googleblog.com/build-with-google-antigravity-our-new-agentic-development-platform/ 8. After a Week With Google's AI Coder, I'm Not a Developer Anymore - Muhammad Awais, https://blog.devwithawais.com/after-a-week-with-googles-ai-coder-i-m-not-a-developer-anymore-93215f81b639 9. New Antigravity Update Is INSANE! - YouTube, https://www.youtube.com/watch?v=Nr4DuTI27CY 10. NEW Antigravity Kit 2.0 Update is INSANE! (FREE!) - YouTube, https://www.youtube.com/watch?v=sx0XW3al2Lg 11. sickn33/antigravity-awesome-skills: The Ultimate Collection of 200+ Agentic Skills for Claude Code/Antigravity/Cursor. Battle-tested, high-performance skills for AI agents including official skills from Anthropic and Vercel. - GitHub, https://github.com/sickn33/antigravity-awesome-skills 12. Agent Skills - Google Antigravity Documentation, https://antigravity.google/docs/skills 13. Sample Google Antigravity Skills - GitHub, https://github.com/rominirani/antigravity-skills 14. The Router Pattern: A Smarter Way to Build AI Agents | by Brian Jenney | Medium, https://brianjenney.medium.com/the-router-pattern-a-smarter-way-to-build-ai-agents-dbdd2ee12656 15. Developer's guide to multi-agent patterns in ADK, https://developers.googleblog.com/developers-guide-to-multi-agent-patterns-in-adk/
+
+
+
+
+
+
+
+
+
+
+
+
+Based on Google's official documentation, this guide details how to create agents, skills, and workflows in Google Antigravity. It provides a specification precise enough for an LLM to interpret and execute.
+
+
+Here’s a structured breakdown of its core components and creation process.
+
+
+### **Antigravity Core Components**
+*   **Agent Manager**: Your "Mission Control" for orchestrating multiple autonomous agents that plan, code, test, and debug. Think of yourself as an architect, not a typist.
+*   **Skills**: Specialized knowledge modules loaded on-demand (like a GSAP or TypeScript expert). They prevent "tool bloat" by only activating when needed.
+*   **Workflows**: User-triggered, step-by-step automation "recipes" (e.g., `/deploy`). They use Skills as building blocks.
+*   **Rules**: Global guardrails and policies always active in the system prompt (e.g., "always use TypeScript strict mode").
+
+
+---
+### **1. Creating and Orchestrating Agents**
+An agent is an autonomous instance of the underlying AI model (like Gemini 3 Pro) tasked with a specific objective.
+
+
+#### **Agent Creation via Agent Manager**
+Agents are created and managed from the **Agent Manager** dashboard.
+*   **Action**: Use the `New Task` or `Start Conversation` button.
+*   **Input**: Provide a high-level, goal-oriented prompt.
+    *   **Example (GSAP Expert)**: *"Refactor the animations on the homepage to use GSAP 3. Ensure they are performant, accessible, and match the provided design spec."*
+    *   **Example (TypeScript Expert)**: *"Migrate the `utils/` directory to strict TypeScript. Add proper type definitions, generics where applicable, and ensure no `any` types remain."*
+*   **Configuration**: Before execution, you can select the **Model** (Gemini, Claude, GPT-4) and **Planning Mode**:
+    *   **Planning**: For complex tasks. The agent creates a detailed plan (a "Plan Artifact") before acting.
+    *   **Fast**: For simple, quick tasks like renaming variables.
+
+
+#### **Agent Execution & Verification**
+Agents work autonomously across the editor, terminal, and browser. You verify their work through **Artifacts**, not logs.
+*   **Types of Artifacts**: Task Plans, Implementation Diffs, Screenshots, Browser Test Recordings.
+*   **Review Process**: Monitor the Agent Manager, review artifacts, and provide feedback directly on them.
+
+
+---
+### **2. Creating Specialized Skills**
+A Skill is a directory-based package that extends an agent's capabilities for a specific domain.
+
+
+#### **Skill Structure**
+Skills can be **Workspace-specific** (`./.agent/skills/`) or **Global** (`~/.gemini/antigravity/skills/`). A typical skill has this structure:
+```
+gsap-animation-expert/
+├── SKILL.md          # Core definition file
+├── scripts/          # (Optional) Executable scripts
+│   └── optimize-animation.js
+└── references/       # (Optional) Docs, templates
+    └── best-practices.md
+```
+
+
+#### **The `SKILL.md` File**
+This is the skill's brain. It uses YAML frontmatter for metadata and Markdown for instructions.
+```yaml
+---
+name: gsap-animation-expert
+description: Use when the user requests animation work, UI transitions, or performance optimization with the GreenSock Animation Platform (GSAP). Specializes in GSAP 3 syntax, ScrollTrigger, and motion accessibility.
+---
+# GSAP Animation Expert
+
+
+## Goal
+Create smooth, performant, and accessible animations using GSAP best practices.
+
+
+## Instructions
+1. Prioritize the use of `gsap.to()`, `gsap.from()`, and `gsap.timeline()` for declarative animations.
+2. Always use `requestAnimationFrame` and leverage `will-change` CSS property judiciously.
+3. Check and adhere to the project's existing animation pattern library.
+4. For scroll-based animations, use ScrollTrigger with lazy loading.
+5. **Constraints**: Never use deprecated GSAP 2.x syntax. Avoid using `x` and `y` properties directly; use `translateX` and `translateY`.
+```
+**Key Fields**:
+*   **`name`**: Unique identifier (defaults to directory name).
+*   **`description`**: **Crucial**. This is the semantic trigger. Make it detailed so the agent can correctly match user intent.
+
+
+#### **Integrating Scripts**
+Skills can delegate complex actions to scripts.
+*   In your `SKILL.md`, instruct the agent to run a script: *"Use `scripts/optimize-animation.js` to analyze the current bundle's animation impact."*
+*   The script can be Python, Bash, Node.js, etc.
+
+
+---
+### **3. Creating Automated Workflows**
+A Workflow is a predefined sequence triggered by a user command or detected intent.
+
+
+#### **Workflow Structure**
+Workflows are stored in `.agent/workflows/` as `.md` files.
+```markdown
+---
+description: Scaffold a new React component with TypeScript and unit test
+---
+# React Component Scaffolder
+
+
+1. **Ask** the user for the component name (e.g., `PrimaryButton`).
+2. **Create** the directory: `src/components/{{ComponentName}}/`.
+3. **Create** the component file `index.tsx` with a typed interface and proper JSX structure.
+4. **Create** a companion unit test file `{{ComponentName}}.test.tsx` using Vitest.
+5. **Create** a Storybook story file.
+// turbo-all
+6. Run `npm run lint:fix` on the new files.
+```
+**Key Mechanics**:
+*   **Trigger**: The agent automatically scans workflows when it detects user intent matching the `description`. You can also use slash commands (e.g., `/scaffold-component`).
+*   **Turbo Mode**: Add `// turbo` above a step or `// turbo-all` in the file to let the agent execute terminal commands without asking for permission each time.
+#### **Workflow vs. Skill**
+*   **Workflow**: **User-triggered macro**. "Do this specific, multi-step process I've predefined."
+*   **Skill**: **Agent-triggered capability**. "Here's how to be an expert in this domain; use this knowledge when you see the need."
+---
+### **4. Composition: Building a Complete System**
+The real power lies in combining these components.
+
+
+**Example: Automated UI Library Update**
+1.  **User Prompt** (to Agent Manager): *"Update all button components in our design system to the new variant API."*
+2.  **Agent Activation**: The agent scans available Skills and loads `typescript-refactorer` and `ui-testing-expert`.
+3.  **Workflow Execution**: The agent identifies and executes a predefined `update-component-library` workflow.
+4.  **Process**:
+    *   The workflow uses the **Skill's** specialized refactoring instructions.
+    *   It leverages the **Skill's** script to run automated visual regression tests.
+    *   A **Rule** ensures all commits follow the conventional commits standard.
+5.  **Output**: The agent presents Artifacts: a diff of changes, a test report, and before/after screenshots for review.
+To start building, install Antigravity from its official download page and begin by creating a `.agent/skills/` or `.agent/workflows/` directory in your project.
+
+
+I hope this detailed manual provides a clear blueprint. For which specific agent or skill would you like to create a detailed specification file first?

@@ -1,7 +1,7 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
+import { useEffect, useRef, useState } from "react";
 
 import { cn } from "@/lib/utils";
 
@@ -15,6 +15,14 @@ interface NumberTickerProps {
   className?: string;
 }
 
+/**
+ * NumberTicker V2 — Alinhado com o padrão do HERO
+ *
+ * Mudanças:
+ * - Font: Agora usa font-sans (Inter) como os stats do Hero (text-4xl font-bold)
+ * - Removido font-mono dos números grandes (mono é só para labels pequenos)
+ * - Mantida animação GSAP
+ */
 export function NumberTicker({
   value,
   decimals = 1,
@@ -49,7 +57,13 @@ export function NumberTicker({
   const formatted = display.toFixed(decimals);
 
   return (
-    <span className={cn("font-mono tabular-nums tracking-tight text-[#1A1A1A]", className)}>
+    <span
+      className={cn(
+        // Hero stats pattern: font-sans (Inter), bold, tracking-tight
+        "font-sans font-bold tabular-nums tracking-tight text-[#1A1A1A]",
+        className,
+      )}
+    >
       {prefix}
       {formatted}
       {suffix}

@@ -24,42 +24,42 @@ interface VaultItem {
 const VAULT_ITEMS: VaultItem[] = [
   {
     id: 1,
-    category: "IMÓVEIS",
-    title: "Residencial Premium",
-    value: "R$ 500k+",
-    leverage: "70%",
-    image: "/assets/vault/real-estate.jpg",
+    category: "FROTA",
+    title: "Scania R 540 (Ativo Logístico)",
+    value: "R$ 850k - 1.2M",
+    leverage: "100% LTV",
+    image: "/assets/vault/fleet.jpg",
   },
   {
     id: 2,
-    category: "FROTA",
-    title: "Veículos Executivos",
-    value: "R$ 300k+",
-    leverage: "80%",
-    image: "/assets/vault/fleet.jpg",
+    category: "IMÓVEIS",
+    title: "Reserva de Valor Sólida",
+    value: "R$ 1M - 10M",
+    leverage: "Arbitragem",
+    image: "/assets/vault/real-estate.jpg",
   },
   {
     id: 3,
     category: "AGRO",
-    title: "Máquinas Agrícolas",
-    value: "R$ 400k+",
-    leverage: "70%",
+    title: "Safra Tecnológica",
+    value: "R$ 500k - 3M",
+    leverage: "Sazonal",
     image: "/assets/vault/agro.jpg",
   },
   {
     id: 4,
     category: "NÁUTICA",
-    title: "Embarcações de Luxo",
-    value: "R$ 800k+",
-    leverage: "65%",
+    title: "Marine Lifestyle (Azimut)",
+    value: "R$ 1M - 5M",
+    leverage: "Tax Free",
     image: "/assets/vault/nautica.jpg",
   },
   {
     id: 5,
     category: "AÉREO",
-    title: "Aeronaves Executivas",
-    value: "R$ 2M+",
-    leverage: "60%",
+    title: "Mobilidade Executiva",
+    value: "R$ 2M - 15M",
+    leverage: "Liquidez",
     image: "/assets/vault/aereo.jpg",
   },
 ];
@@ -146,12 +146,55 @@ export default function TheVault() {
       onThrowUpdate: updateDepth,
     });
 
+    // Center track visually (so the group appears centered on large viewports)
+    try {
+      track.style.margin = "0 auto";
+    } catch (e) {
+      /* ignore */
+    }
+
+    // Enable horizontal scroll with mouse wheel (translate vertical wheel -> horizontal)
+    const wheelHandler = (ev: WheelEvent) => {
+      // If there's a vertical scroll intent (e.g., when not over our track), let it pass
+      // but when over the track container, convert vertical wheel into horizontal movement.
+      ev.preventDefault();
+
+      const parent = track.parentElement as HTMLElement;
+      if (!parent) return;
+
+      const minX = -(track.scrollWidth - parent.clientWidth + 100);
+      const maxX = 100;
+
+      // current transform x
+      const currentX = (gsap.getProperty(track, "x") as number) || 0;
+      // invert deltaY so wheel down moves carousel right
+      const delta = ev.deltaY;
+      let nextX = currentX - delta;
+      nextX = Math.max(minX, Math.min(maxX, nextX));
+
+      gsap.to(track, {
+        x: nextX,
+        duration: 0.45,
+        ease: "power2.out",
+        onUpdate: updateDepth,
+      });
+    };
+
+    // attach wheel listener on the visible container so it only triggers when hovering the carousel
+    track.parentElement?.addEventListener("wheel", wheelHandler, {
+      passive: false,
+    });
+
     // Initial depth update
     updateDepth();
 
     return () => {
       tl.kill();
       draggable[0]?.kill();
+      track.parentElement?.removeEventListener(
+        "wheel",
+        wheelHandler as EventListener,
+      );
     };
   }, [filteredItems]);
 
